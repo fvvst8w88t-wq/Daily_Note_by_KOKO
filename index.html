@@ -24,7 +24,6 @@
       --radius: 12px;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-
     [data-theme="dark"] {
       --bg: #090d16;
       --surface: #131b2e;
@@ -38,9 +37,12 @@
       --accent: #a78bfa;
       --success: #34d399;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
     body {
       font-family: var(--font);
       background-color: var(--bg);
@@ -51,7 +53,6 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
-
     .app-header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -63,7 +64,6 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .app-title {
       font-size: 1.05rem;
       font-weight: 700;
@@ -72,13 +72,11 @@
       align-items: center;
       gap: 6px;
     }
-
     .header-actions {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     .icon-btn {
       background: var(--surface-subtle);
       border: 1px solid var(--border);
@@ -92,7 +90,6 @@
       cursor: pointer;
       font-size: 1rem;
     }
-
     .date-bar {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -104,13 +101,11 @@
       top: 57px;
       z-index: 35;
     }
-
     .date-nav-group {
       display: flex;
       align-items: center;
       gap: 6px;
     }
-
     .date-display-box {
       position: relative;
       display: inline-flex;
@@ -124,7 +119,6 @@
       font-size: 13px;
       color: var(--text);
     }
-
     .date-picker-native {
       position: absolute;
       top: 0;
@@ -134,22 +128,22 @@
       opacity: 0;
       cursor: pointer;
     }
-
     .container {
       max-width: 680px;
       margin: 0 auto;
       padding: 12px 14px;
     }
-
-    .section-view { display: none; }
-    .section-view.active { display: block; animation: fadeIn 0.15s ease-out; }
-
+    .section-view {
+      display: none;
+    }
+    .section-view.active {
+      display: block;
+      animation: fadeIn 0.15s ease-out;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Glance Board Styles */
     .glance-hero {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -161,7 +155,6 @@
       gap: 8px;
       text-align: center;
     }
-
     .glance-stat {
       display: flex;
       flex-direction: column;
@@ -169,13 +162,11 @@
       gap: 2px;
       cursor: pointer;
     }
-
     .glance-stat-num {
       font-size: 1.4rem;
       font-weight: 800;
       line-height: 1.1;
     }
-
     .glance-stat-label {
       font-size: 10px;
       text-transform: uppercase;
@@ -183,7 +174,6 @@
       letter-spacing: 0.05em;
       color: var(--text-muted);
     }
-
     .overview-section-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -192,7 +182,6 @@
       overflow: hidden;
       box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }
-
     .overview-header {
       padding: 10px 14px;
       background: var(--surface-subtle);
@@ -203,7 +192,6 @@
       font-weight: 700;
       font-size: 13px;
     }
-
     .overview-header .jump-link {
       font-size: 12px;
       color: var(--primary);
@@ -211,11 +199,9 @@
       font-weight: 600;
       text-decoration: none;
     }
-
     .overview-body {
       padding: 10px 14px;
     }
-
     .glance-item {
       display: flex;
       align-items: center;
@@ -224,16 +210,15 @@
       border-bottom: 1px solid var(--border);
       font-size: 14px;
     }
-    .glance-item:last-child { border-bottom: none; }
-
+    .glance-item:last-child {
+      border-bottom: none;
+    }
     .glance-empty {
       padding: 12px 0;
       text-align: center;
       color: var(--text-muted);
       font-size: 13px;
     }
-
-    /* Standard Cards & UI */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -242,7 +227,6 @@
       margin-bottom: 12px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }
-
     .card-title {
       font-size: 0.95rem;
       font-weight: 700;
@@ -251,7 +235,6 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .input-field, select, textarea {
       width: 100%;
       background: var(--surface-subtle);
@@ -263,11 +246,9 @@
       outline: none;
       font-family: inherit;
     }
-
     .input-field:focus, select:focus, textarea:focus {
       border-color: var(--primary);
     }
-
     .btn {
       display: inline-flex;
       align-items: center;
@@ -283,21 +264,20 @@
       gap: 6px;
       touch-action: manipulation;
     }
-
     .btn-secondary {
       background: var(--surface-subtle);
       color: var(--text);
       border: 1px solid var(--border);
     }
-
-    .btn-danger { background: var(--danger); color: #ffffff; }
-
+    .btn-danger {
+      background: var(--danger);
+      color: #ffffff;
+    }
     .btn-sm {
       padding: 3px 8px;
       font-size: 12px;
       border-radius: 6px;
     }
-
     .badge {
       display: inline-flex;
       align-items: center;
@@ -307,9 +287,14 @@
       font-weight: 600;
       border-radius: 999px;
     }
-    .badge-work { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
-    .badge-personal { background: rgba(16, 185, 129, 0.12); color: #10b981; }
-
+    .badge-work {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
+    }
+    .badge-personal {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
     .status-pill {
       display: inline-flex;
       align-items: center;
@@ -321,11 +306,21 @@
       border: 1px solid var(--border);
       background: var(--surface-subtle);
     }
-
-    .status-urgent { background: rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
-    .status-in_progress { background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3); color: #d97706; }
-    .status-dependent { background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.3); color: #8b5cf6; }
-
+    .status-urgent {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+    .status-in_progress {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: #d97706;
+    }
+    .status-dependent {
+      background: rgba(139, 92, 246, 0.12);
+      border-color: rgba(139, 92, 246, 0.3);
+      color: #8b5cf6;
+    }
     .todo-item {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -333,24 +328,20 @@
       padding: 10px 12px;
       margin-bottom: 8px;
     }
-
     .todo-header {
       display: flex;
       align-items: flex-start;
       gap: 8px;
     }
-
     .todo-title {
       font-weight: 600;
       font-size: 14px;
       word-break: break-word;
     }
-
     .todo-completed .todo-title {
       text-decoration: line-through;
       color: var(--text-muted);
     }
-
     .subtask-item {
       display: flex;
       align-items: center;
@@ -358,12 +349,10 @@
       margin-top: 6px;
       font-size: 13px;
     }
-
     .subtask-completed {
       text-decoration: line-through;
       color: var(--text-muted);
     }
-
     .subtask-chip-btn {
       font-size: 11px;
       padding: 2px 6px;
@@ -373,7 +362,6 @@
       cursor: pointer;
       user-select: none;
     }
-
     .priority-item {
       display: flex;
       align-items: center;
@@ -384,7 +372,6 @@
       border-radius: var(--radius);
       margin-bottom: 6px;
     }
-
     .star-btn {
       background: none;
       border: none;
@@ -392,8 +379,9 @@
       color: var(--border);
       cursor: pointer;
     }
-    .star-btn.starred { color: #f59e0b; }
-
+    .star-btn.starred {
+      color: #f59e0b;
+    }
     .reminder-card {
       border-left: 4px solid var(--danger);
       background: var(--surface);
@@ -407,7 +395,6 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .journal-segmented {
       display: flex;
       background: var(--surface-subtle);
@@ -417,7 +404,6 @@
       margin-bottom: 12px;
       gap: 2px;
     }
-
     .journal-segment-btn {
       flex: 1;
       border: none;
@@ -429,13 +415,11 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     .journal-segment-btn.active {
       background: var(--surface);
       color: var(--text);
       box-shadow: 0 1px 2px rgba(0,0,0,0.06);
     }
-
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -448,8 +432,9 @@
       z-index: 50;
       scrollbar-width: none;
     }
-    .bottom-nav::-webkit-scrollbar { display: none; }
-
+    .bottom-nav::-webkit-scrollbar {
+      display: none;
+    }
     .nav-tab {
       flex: 1;
       min-width: 52px;
@@ -466,24 +451,26 @@
       cursor: pointer;
       white-space: nowrap;
     }
-
     .nav-tab.active {
       color: var(--primary);
       font-weight: 700;
     }
-
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(0, 0, 0, 0.45);
       z-index: 100;
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
-    .modal-overlay.open { display: flex; }
-
+    .modal-overlay.open {
+      display: flex;
+    }
     .modal-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -495,7 +482,6 @@
       flex-direction: column;
       overflow: hidden;
     }
-
     .modal-header {
       padding: 12px 16px;
       border-bottom: 1px solid var(--border);
@@ -504,9 +490,11 @@
       align-items: center;
       font-weight: 700;
     }
-
-    .modal-body { padding: 12px 16px; overflow-y: auto; flex: 1; }
-
+    .modal-body {
+      padding: 12px 16px;
+      overflow-y: auto;
+      flex: 1;
+    }
     #toast {
       position: fixed;
       top: 54px;
@@ -522,8 +510,15 @@
       pointer-events: none;
       transition: opacity 0.2s ease;
     }
-    #toast.show { opacity: 1; }
+    #toast.show {
+      opacity: 1;
+    }
   </style>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -534,6 +529,7 @@
     </div>
     <div class="header-actions">
       <button class="icon-btn" id="history-modal-btn" title="Browse Past Dates">📜</button>
+      <button class="btn btn-secondary btn-sm" id="auth-btn" style="font-size: 11px;">Sign In</button>
       <button class="icon-btn" id="theme-btn" title="Toggle Theme">🌓</button>
       <button class="icon-btn" id="backup-btn" title="Export Backup">💾</button>
     </div>
@@ -568,10 +564,8 @@
   </div>
 
   <main class="container">
-
     <!-- 1. DEFAULT OVERVIEW / GLANCE TAB -->
     <section id="view-dashboard" class="section-view active">
-      <!-- Top 4 Glance Stats -->
       <div class="glance-hero">
         <div class="glance-stat" onclick="switchTab('view-reminders')">
           <span class="glance-stat-num" id="stat-alerts" style="color: var(--danger);">0</span>
@@ -591,7 +585,6 @@
         </div>
       </div>
 
-      <!-- Critical Alerts Section -->
       <div class="overview-section-card" id="card-overview-alerts">
         <div class="overview-header">
           <span>🚨 Must Not Forget</span>
@@ -600,7 +593,6 @@
         <div class="overview-body" id="overview-alerts-list"></div>
       </div>
 
-      <!-- Top Priorities Checklist Section -->
       <div class="overview-section-card">
         <div class="overview-header">
           <span>⭐ Top Priorities</span>
@@ -609,7 +601,6 @@
         <div class="overview-body" id="overview-priorities-list"></div>
       </div>
 
-      <!-- Today's Schedule & Events -->
       <div class="overview-section-card">
         <div class="overview-header">
           <span>📅 Today's Schedule</span>
@@ -618,7 +609,6 @@
         <div class="overview-body" id="overview-events-list"></div>
       </div>
 
-      <!-- Pending Daily Tasks Section -->
       <div class="overview-section-card">
         <div class="overview-header">
           <span>📋 Daily Tasks & Subtasks</span>
@@ -703,7 +693,6 @@
         <button class="journal-segment-btn active" id="seg-btn-work" onclick="setJournalSegment('work')">💼 Work Reflection</button>
         <button class="journal-segment-btn" id="seg-btn-personal" onclick="setJournalSegment('personal')">🏠 Personal Journal</button>
       </div>
-
       <div class="card" id="journal-work-card">
         <div class="card-title">
           <span>💼 Work Reflection</span>
@@ -711,7 +700,6 @@
         </div>
         <textarea id="journal-work-pad" rows="12" class="input-field" placeholder="Key wins, blockers, meetings, and work notes..."></textarea>
       </div>
-
       <div class="card" id="journal-personal-card" style="display: none;">
         <div class="card-title">
           <span>🏠 Personal Journal</span>
@@ -720,10 +708,9 @@
         <textarea id="journal-personal-pad" rows="12" class="input-field" placeholder="Thoughts, gratitude, habits, and reflections..."></textarea>
       </div>
     </section>
-
   </main>
 
-  <!-- Bottom Navigation with Overview as primary tab -->
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <button class="nav-tab active" data-target="view-dashboard">
       <span>📊</span>
@@ -752,6 +739,37 @@
   </nav>
 
   <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyDloSYo4PdDCE_RF_mERU2pmzZLz0Nd2XI",
+  authDomain: "daily-planner-fe3e1.firebaseapp.com",
+  projectId: "daily-planner-fe3e1",
+  storageBucket: "daily-planner-fe3e1.firebasestorage.app",
+  messagingSenderId: "995038754697",
+  appId: "1:995038754697:web:636b67edae269e73805358",
+  measurementId: "G-0S7JEZBTKR"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Enable offline persistence for Firestore if supported
+    try {
+      db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
+    } catch (e) {}
+
+    // 2. Date Initialization (Declared before Auth & Listeners to prevent ReferenceErrors)
+    function formatLocalDate(d = new Date()) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    const todayDateString = formatLocalDate(new Date());
+    let selectedDateString = todayDateString;
+
+    // 3. Local Storage Helpers
     const PREFIX = "daily_planner_";
 
     function getDB(k, fallback) {
@@ -769,16 +787,6 @@
       } catch (e) {}
     }
 
-    function formatLocalDate(d = new Date()) {
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-
-    const todayDateString = formatLocalDate(new Date());
-    let selectedDateString = todayDateString;
-
     let allSavedDates = getDB("all_dates", [todayDateString]);
     if (!allSavedDates.includes(todayDateString)) {
       allSavedDates.unshift(todayDateString);
@@ -795,18 +803,91 @@
       });
     }
 
-    function saveDay(dateStr, data) {
-      setDB("date_" + dateStr, data);
-      if (!allSavedDates.includes(dateStr)) {
-        allSavedDates.push(dateStr);
-        allSavedDates.sort((a, b) => b.localeCompare(a));
-        setDB("all_dates", allSavedDates);
-      }
-    }
-
     let currentDayData = loadDay(selectedDateString);
     let reminders = getDB("reminders", []);
 
+    // 4. Cloud Real-Time Listener & Storage Sync
+    let unsubscribeSnapshot = null;
+
+    function listenToCloudData(dateStr) {
+      if (unsubscribeSnapshot) {
+        unsubscribeSnapshot();
+      }
+
+      if (currentUser) {
+        unsubscribeSnapshot = db.collection("users").doc(currentUser.uid)
+          .collection("days").doc(dateStr)
+          .onSnapshot((doc) => {
+            if (doc.exists) {
+              currentDayData = doc.data();
+            } else {
+              currentDayData = {
+                todos: [],
+                priorities: [],
+                events: [],
+                journalWork: "",
+                journalPersonal: ""
+              };
+            }
+
+            const workPad = document.getElementById("journal-work-pad");
+            const personalPad = document.getElementById("journal-personal-pad");
+            if (workPad) workPad.value = currentDayData.journalWork || "";
+            if (personalPad) personalPad.value = currentDayData.journalPersonal || "";
+
+            renderAll();
+          }, (error) => {
+            console.error("Firestore sync error:", error);
+          });
+      }
+    }
+
+    function saveDay(dateStr, data) {
+      if (currentUser) {
+        db.collection("users").doc(currentUser.uid)
+          .collection("days").doc(dateStr)
+          .set(data, { merge: true })
+          .catch((err) => console.error("Cloud save failed:", err));
+      } else {
+        setDB("date_" + dateStr, data);
+        if (!allSavedDates.includes(dateStr)) {
+          allSavedDates.push(dateStr);
+          allSavedDates.sort((a, b) => b.localeCompare(a));
+          setDB("all_dates", allSavedDates);
+        }
+      }
+    }
+
+    // 5. Auth State & Button Handling
+    let currentUser = null;
+    const authBtn = document.getElementById("auth-btn");
+
+    authBtn.addEventListener("click", () => {
+      if (currentUser) {
+        auth.signOut();
+      } else {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).catch(err => {
+          alert("Sign in failed: " + err.message);
+        });
+      }
+    });
+
+    auth.onAuthStateChanged((user) => {
+      currentUser = user;
+      if (user) {
+        authBtn.textContent = user.displayName ? user.displayName.split(" ")[0] : "Sign Out";
+        showToast("Signed in: " + user.email);
+        listenToCloudData(selectedDateString);
+      } else {
+        authBtn.textContent = "Sign In";
+        showToast("Offline / Local mode");
+        currentDayData = loadDay(selectedDateString);
+        renderAll();
+      }
+    });
+
+    // 6. UI Synchronization
     function syncAll() {
       currentDayData.journalWork = document.getElementById("journal-work-pad").value;
       currentDayData.journalPersonal = document.getElementById("journal-personal-pad").value;
@@ -836,34 +917,33 @@
       tab.addEventListener("click", () => switchTab(tab.getAttribute("data-target")));
     });
 
-    // 1. RENDER OVERVIEW TAB
+    // RENDER: Overview Tab
     function renderOverview() {
-      const pendingTodos = currentDayData.todos.filter(t => !t.completed);
-      const pendingPriorities = currentDayData.priorities.filter(p => !p.completed);
+      const pendingTodos = (currentDayData.todos || []).filter(t => !t.completed);
+      const pendingPriorities = (currentDayData.priorities || []).filter(p => !p.completed);
 
-      // Top Glance Numbers
       document.getElementById("stat-alerts").textContent = reminders.length;
       document.getElementById("stat-priorities").textContent = pendingPriorities.length;
       document.getElementById("stat-tasks").textContent = pendingTodos.length;
-      document.getElementById("stat-events").textContent = currentDayData.events.length;
+      document.getElementById("stat-events").textContent = (currentDayData.events || []).length;
 
-      // Overview: Alerts
+      // Alerts
       const alertsEl = document.getElementById("overview-alerts-list");
       if (reminders.length === 0) {
         alertsEl.innerHTML = `<div class="glance-empty">No critical alerts pinned.</div>`;
       } else {
         alertsEl.innerHTML = reminders.map((r, i) => `
           <div class="glance-item">
-            <span style="font-size: 16px;">⚠️️</span>
+            <span style="font-size: 16px;">⚠️</span>
             <span style="flex: 1; font-weight: 600; font-size: 13px;">${r.text}</span>
             <button class="btn btn-secondary btn-sm" onclick="deleteReminder(${i})">Done</button>
           </div>
         `).join('');
       }
 
-      // Overview: Priorities
+      // Priorities
       const prioEl = document.getElementById("overview-priorities-list");
-      if (currentDayData.priorities.length === 0) {
+      if ((currentDayData.priorities || []).length === 0) {
         prioEl.innerHTML = `<div class="glance-empty">No priorities set for today.</div>`;
       } else {
         prioEl.innerHTML = currentDayData.priorities.map((p, i) => `
@@ -875,9 +955,9 @@
         `).join('');
       }
 
-      // Overview: Events
+      // Events
       const eventsEl = document.getElementById("overview-events-list");
-      if (currentDayData.events.length === 0) {
+      if ((currentDayData.events || []).length === 0) {
         eventsEl.innerHTML = `<div class="glance-empty">No scheduled events for this date.</div>`;
       } else {
         eventsEl.innerHTML = currentDayData.events.map((e) => `
@@ -889,20 +969,18 @@
         `).join('');
       }
 
-      // Overview: Daily Tasks & Subtasks
+      // Tasks
       const tasksEl = document.getElementById("overview-todos-list");
-      if (currentDayData.todos.length === 0) {
+      if ((currentDayData.todos || []).length === 0) {
         tasksEl.innerHTML = `<div class="glance-empty">No to-do items created.</div>`;
       } else {
         tasksEl.innerHTML = currentDayData.todos.map(t => {
           const subs = t.subtasks || [];
           const doneSubs = subs.filter(s => s.completed).length;
-
           let subsSummary = "";
           if (subs.length > 0) {
             subsSummary = `<div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">Subtasks: ${doneSubs}/${subs.length} completed</div>`;
           }
-
           return `
             <div class="glance-item" style="align-items: flex-start;">
               <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 3px; width: 17px; height: 17px; accent-color: var(--primary);">
@@ -920,23 +998,21 @@
       }
     }
 
-    // 2. RENDER TO-DOS
+    // RENDER: To-Dos
     function renderTodos() {
       const list = document.getElementById("todo-list");
       if (!list) return;
-      if (currentDayData.todos.length === 0) {
+      if ((currentDayData.todos || []).length === 0) {
         list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px 0;">No tasks yet.</div>`;
         return;
       }
-
       list.innerHTML = currentDayData.todos.map(t => {
         const subsHtml = (t.subtasks || []).map((st, sIdx) => `
           <div class="subtask-item ${st.completed ? 'subtask-completed' : ''}">
             <input type="checkbox" ${st.completed ? 'checked' : ''} onchange="toggleSubtask('${t.id}', ${sIdx})" style="accent-color: var(--primary);">
             <span style="flex: 1;">${st.text}</span>
-            <span class="subtask-chip-btn" onclick="cycleSubtaskStatus('${t.id}', ${sIdx})" title="Change Status">
-              ${st.type === 'urgent' ? '🔥' : (st.type === 'dependent' ? '⏳' : '🔄')}
-            </span>
+            <span class="subtask-chip-btn" onclick="cycleSubtaskStatus('${t.id}', ${sIdx})" title="Change Status">${st.type === 'urgent' ? '🔥' : (st.type === 'dependent' ? '⏳' : '🔄')}</span>
+            <button class="btn btn-secondary btn-sm" onclick="renameSubtask('${t.id}', ${sIdx})" style="padding: 1px 5px; font-size: 10px;" title="Rename Subtask">✏️</button>
             <button class="btn btn-secondary btn-sm" onclick="deleteSubtask('${t.id}', ${sIdx})" style="padding: 1px 5px; font-size: 10px;">×</button>
           </div>
         `).join('');
@@ -953,11 +1029,11 @@
                 </div>
               </div>
               <div style="display: flex; gap: 4px;">
+                <button class="btn btn-secondary btn-sm" onclick="renameTodo('${t.id}')" title="Rename Task">✏️</button>
                 <button class="btn btn-secondary btn-sm" onclick="toggleSubInput('${t.id}')">+Sub</button>
                 <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deleteTodo('${t.id}')">✕</button>
               </div>
             </div>
-
             <div style="margin-top: 6px; padding-left: 24px;">
               ${subsHtml}
               <div id="sub-row-${t.id}" style="display: none; gap: 4px; margin-top: 6px;">
@@ -975,11 +1051,11 @@
       }).join('');
     }
 
-    // 3. RENDER PRIORITIES
+    // RENDER: Priorities
     function renderPriorities() {
       const list = document.getElementById("priority-list");
       if (!list) return;
-      if (currentDayData.priorities.length === 0) {
+      if ((currentDayData.priorities || []).length === 0) {
         list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 18px 0;">No priorities added.</div>`;
         return;
       }
@@ -993,11 +1069,11 @@
       `).join('');
     }
 
-    // 4. RENDER EVENTS
+    // RENDER: Events
     function renderEvents() {
       const list = document.getElementById("event-list");
       if (!list) return;
-      if (currentDayData.events.length === 0) {
+      if ((currentDayData.events || []).length === 0) {
         list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 18px 0;">No events scheduled.</div>`;
         return;
       }
@@ -1012,7 +1088,7 @@
       `).join('');
     }
 
-    // 5. RENDER REMINDERS
+    // RENDER: Reminders
     function renderReminders() {
       const list = document.getElementById("reminder-list");
       if (!list) return;
@@ -1040,6 +1116,7 @@
     document.getElementById("todo-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const inp = document.getElementById("todo-input");
+      if (!currentDayData.todos) currentDayData.todos = [];
       currentDayData.todos.unshift({
         id: Date.now().toString(),
         title: inp.value.trim(),
@@ -1052,6 +1129,28 @@
       syncAll();
       showToast("Task added");
     });
+
+    window.renameTodo = (id) => {
+      const task = currentDayData.todos.find(t => t.id === id);
+      if (!task) return;
+      const updatedTitle = prompt("Rename task:", task.title);
+      if (updatedTitle !== null && updatedTitle.trim() !== "") {
+        task.title = updatedTitle.trim();
+        syncAll();
+        showToast("Task renamed");
+      }
+    };
+
+    window.renameSubtask = (todoId, subIdx) => {
+      const task = currentDayData.todos.find(t => t.id === todoId);
+      if (!task || !task.subtasks || !task.subtasks[subIdx]) return;
+      const updatedText = prompt("Rename subtask:", task.subtasks[subIdx].text);
+      if (updatedText !== null && updatedText.trim() !== "") {
+        task.subtasks[subIdx].text = updatedText.trim();
+        syncAll();
+        showToast("Subtask renamed");
+      }
+    };
 
     window.toggleTodo = (id) => {
       currentDayData.todos = currentDayData.todos.map(t => {
@@ -1079,11 +1178,14 @@
       const inp = document.getElementById(`sub-input-${id}`);
       const typ = document.getElementById(`sub-type-${id}`).value;
       if (!inp.value.trim()) return;
-
       currentDayData.todos = currentDayData.todos.map(t => {
         if (t.id === id) {
           const subs = t.subtasks || [];
-          return { ...t, completed: false, subtasks: [...subs, { text: inp.value.trim(), completed: false, type: typ }] };
+          return {
+            ...t,
+            completed: false,
+            subtasks: [...subs, { text: inp.value.trim(), completed: false, type: typ }]
+          };
         }
         return t;
       });
@@ -1130,6 +1232,7 @@
     document.getElementById("priority-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const inp = document.getElementById("priority-input");
+      if (!currentDayData.priorities) currentDayData.priorities = [];
       currentDayData.priorities.push({ text: inp.value.trim(), completed: false, starred: true });
       inp.value = "";
       syncAll();
@@ -1154,6 +1257,7 @@
 
     document.getElementById("event-form").addEventListener("submit", (e) => {
       e.preventDefault();
+      if (!currentDayData.events) currentDayData.events = [];
       currentDayData.events.push({
         title: document.getElementById("event-title").value.trim(),
         time: document.getElementById("event-time").value
@@ -1227,13 +1331,19 @@
     // DATE NAVIGATION & HISTORY MODAL
     function switchDate(newDate) {
       selectedDateString = newDate;
-      currentDayData = loadDay(selectedDateString);
+
       const isToday = selectedDateString === todayDateString;
       document.getElementById("current-date-label").textContent = isToday ? "Today" : selectedDateString;
       document.getElementById("today-jump-btn").style.display = isToday ? "none" : "inline-flex";
-      document.getElementById("journal-work-pad").value = currentDayData.journalWork || "";
-      document.getElementById("journal-personal-pad").value = currentDayData.journalPersonal || "";
-      renderAll();
+
+      if (currentUser) {
+        listenToCloudData(selectedDateString);
+      } else {
+        currentDayData = loadDay(selectedDateString);
+        document.getElementById("journal-work-pad").value = currentDayData.journalWork || "";
+        document.getElementById("journal-personal-pad").value = currentDayData.journalPersonal || "";
+        renderAll();
+      }
     }
 
     document.getElementById("prev-day-btn").addEventListener("click", () => {
@@ -1260,9 +1370,10 @@
       `).join('');
       historyModal.classList.add("open");
     });
+
     document.getElementById("close-history-btn").addEventListener("click", () => historyModal.classList.remove("open"));
 
-    // INITIAL LAUNCH
+    // Launch initial state
     switchDate(todayDateString);
   </script>
 </body>
