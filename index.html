@@ -10,32 +10,39 @@
   <meta name="theme-color" content="#0f172a">
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f1f5f9;
       --surface: #ffffff;
-      --surface-subtle: #f1f5f9;
+      --surface-subtle: #f8fafc;
+      --surface-card: rgba(255, 255, 255, 0.9);
       --text: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
       --primary: #2563eb;
+      --primary-subtle: rgba(37, 99, 235, 0.08);
       --danger: #ef4444;
       --warning: #f59e0b;
       --accent: #8b5cf6;
       --success: #10b981;
-      --radius: 12px;
+      --radius: 16px;
+      --radius-sm: 8px;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --widget-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
     }
     [data-theme="dark"] {
       --bg: #090d16;
-      --surface: #131b2e;
-      --surface-subtle: #1c2744;
+      --surface: #111827;
+      --surface-subtle: #1a2234;
+      --surface-card: rgba(17, 24, 39, 0.85);
       --text: #f1f5f9;
       --text-muted: #94a3b8;
       --border: #233154;
       --primary: #3b82f6;
+      --primary-subtle: rgba(59, 130, 246, 0.15);
       --danger: #f87171;
       --warning: #fbbf24;
       --accent: #a78bfa;
       --success: #34d399;
+      --widget-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.4);
     }
     * {
       box-sizing: border-box;
@@ -49,7 +56,7 @@
       color: var(--text);
       line-height: 1.4;
       font-size: 15px;
-      padding-bottom: 76px;
+      padding-bottom: 82px;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
@@ -67,7 +74,6 @@
     .app-title {
       font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: -0.01em;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -83,7 +89,7 @@
       color: var(--text);
       width: 36px;
       height: 36px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -131,7 +137,7 @@
     .container {
       max-width: 680px;
       margin: 0 auto;
-      padding: 12px 14px;
+      padding: 14px;
     }
     .section-view {
       display: none;
@@ -144,88 +150,136 @@
       from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .glance-hero {
-      background: var(--surface);
+
+    /* WIDGET DASHBOARD */
+    .widget-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .widget-full {
+      grid-column: span 2;
+    }
+    .widget-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--widget-shadow);
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+    .widget-hero {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-subtle) 100%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 16px;
       margin-bottom: 14px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      text-align: center;
+      box-shadow: var(--widget-shadow);
     }
-    .glance-stat {
+    .widget-hero-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      gap: 2px;
-      cursor: pointer;
+      margin-bottom: 12px;
     }
-    .glance-stat-num {
-      font-size: 1.4rem;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-    .glance-stat-label {
-      font-size: 10px;
+    .widget-hero-title {
+      font-size: 13px;
+      font-weight: 700;
       text-transform: uppercase;
-      font-weight: 600;
       letter-spacing: 0.05em;
       color: var(--text-muted);
     }
-    .overview-section-card {
+    .progress-bar-bg {
+      width: 100%;
+      height: 7px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 6px 0 12px 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .stats-tiles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .stat-tile {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 12px;
-      overflow: hidden;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      border-radius: 12px;
+      padding: 10px 4px;
+      text-align: center;
+      cursor: pointer;
     }
-    .overview-header {
-      padding: 10px 14px;
-      background: var(--surface-subtle);
-      border-bottom: 1px solid var(--border);
+    .stat-num {
+      font-size: 1.3rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .stat-sub {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .widget-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .widget-title {
+      font-size: 13px;
+      font-weight: 750;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-weight: 700;
-      font-size: 13px;
+      gap: 6px;
     }
-    .overview-header .jump-link {
-      font-size: 12px;
+    .widget-action {
+      font-size: 11px;
       color: var(--primary);
       cursor: pointer;
       font-weight: 600;
       text-decoration: none;
     }
-    .overview-body {
-      padding: 10px 14px;
+    .widget-body {
+      max-height: 220px;
+      overflow-y: auto;
     }
-    .glance-item {
+    .widget-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 0;
+      gap: 8px;
+      padding: 7px 0;
       border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-    .glance-item:last-child {
-      border-bottom: none;
-    }
-    .glance-empty {
-      padding: 12px 0;
-      text-align: center;
-      color: var(--text-muted);
       font-size: 13px;
     }
+    .widget-item:last-child {
+      border-bottom: none;
+    }
+    .widget-empty {
+      padding: 14px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* CARDS & INPUTS */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 14px;
       margin-bottom: 12px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      box-shadow: var(--widget-shadow);
     }
     .card-title {
       font-size: 0.95rem;
@@ -278,49 +332,108 @@
       font-size: 12px;
       border-radius: 6px;
     }
+
+    /* BADGES & TAGS */
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 3px;
       padding: 2px 7px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       border-radius: 999px;
     }
-    .badge-work {
-      background: rgba(37, 99, 235, 0.12);
-      color: #2563eb;
+    .badge-work { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+    .badge-personal { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .badge-recurring { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
+    .badge-carried { background: rgba(245, 158, 11, 0.15); color: #d97706; border: 1px dashed rgba(245, 158, 11, 0.4); }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 7px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.06);
     }
-    .badge-personal {
-      background: rgba(16, 185, 129, 0.12);
-      color: #10b981;
+    .tag-blue { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+    .tag-green { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .tag-purple { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
+    .tag-amber { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .tag-red { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+    .tag-pink { background: rgba(236, 72, 153, 0.12); color: #db2777; }
+    .tag-cyan { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
+
+    /* WEEKDAYS PICKER */
+    .weekday-selector {
+      display: flex;
+      gap: 4px;
+      justify-content: space-between;
+      margin-top: 6px;
     }
+    .weekday-btn {
+      flex: 1;
+      padding: 6px 0;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .weekday-btn.selected {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .filter-tags-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .filter-tags-scroll::-webkit-scrollbar { display: none; }
+    .filter-pill {
+      white-space: nowrap;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .filter-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
     .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 3px;
       padding: 2px 7px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--surface-subtle);
     }
-    .status-urgent {
-      background: rgba(239, 68, 68, 0.12);
-      border-color: rgba(239, 68, 68, 0.3);
-      color: #ef4444;
-    }
-    .status-in_progress {
-      background: rgba(245, 158, 11, 0.12);
-      border-color: rgba(245, 158, 11, 0.3);
-      color: #d97706;
-    }
-    .status-dependent {
-      background: rgba(139, 92, 246, 0.12);
-      border-color: rgba(139, 92, 246, 0.3);
-      color: #8b5cf6;
-    }
+    .status-urgent { background: rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
+    .status-in_progress { background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3); color: #d97706; }
+    .status-dependent { background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.3); color: #8b5cf6; }
+
     .todo-item {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -328,31 +441,12 @@
       padding: 10px 12px;
       margin-bottom: 8px;
     }
-    .todo-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .todo-title {
-      font-weight: 600;
-      font-size: 14px;
-      word-break: break-word;
-    }
-    .todo-completed .todo-title {
-      text-decoration: line-through;
-      color: var(--text-muted);
-    }
-    .subtask-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 6px;
-      font-size: 13px;
-    }
-    .subtask-completed {
-      text-decoration: line-through;
-      color: var(--text-muted);
-    }
+    .todo-header { display: flex; align-items: flex-start; gap: 8px; }
+    .todo-title { font-weight: 600; font-size: 14px; word-break: break-word; }
+    .todo-completed .todo-title { text-decoration: line-through; color: var(--text-muted); }
+
+    .subtask-item { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 13px; }
+    .subtask-completed { text-decoration: line-through; color: var(--text-muted); }
     .subtask-chip-btn {
       font-size: 11px;
       padding: 2px 6px;
@@ -362,6 +456,7 @@
       cursor: pointer;
       user-select: none;
     }
+
     .priority-item {
       display: flex;
       align-items: center;
@@ -372,16 +467,9 @@
       border-radius: var(--radius);
       margin-bottom: 6px;
     }
-    .star-btn {
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: var(--border);
-      cursor: pointer;
-    }
-    .star-btn.starred {
-      color: #f59e0b;
-    }
+    .star-btn { background: none; border: none; font-size: 18px; color: var(--border); cursor: pointer; }
+    .star-btn.starred { color: #f59e0b; }
+
     .reminder-card {
       border-left: 4px solid var(--danger);
       background: var(--surface);
@@ -395,6 +483,7 @@
       justify-content: space-between;
       align-items: center;
     }
+
     .journal-segmented {
       display: flex;
       background: var(--surface-subtle);
@@ -420,6 +509,7 @@
       color: var(--text);
       box-shadow: 0 1px 2px rgba(0,0,0,0.06);
     }
+
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -432,9 +522,7 @@
       z-index: 50;
       scrollbar-width: none;
     }
-    .bottom-nav::-webkit-scrollbar {
-      display: none;
-    }
+    .bottom-nav::-webkit-scrollbar { display: none; }
     .nav-tab {
       flex: 1;
       min-width: 52px;
@@ -451,10 +539,8 @@
       cursor: pointer;
       white-space: nowrap;
     }
-    .nav-tab.active {
-      color: var(--primary);
-      font-weight: 700;
-    }
+    .nav-tab.active { color: var(--primary); font-weight: 700; }
+
     .modal-overlay {
       display: none;
       position: fixed;
@@ -468,9 +554,7 @@
       justify-content: center;
       padding: 16px;
     }
-    .modal-overlay.open {
-      display: flex;
-    }
+    .modal-overlay.open { display: flex; }
     .modal-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -490,11 +574,7 @@
       align-items: center;
       font-weight: 700;
     }
-    .modal-body {
-      padding: 12px 16px;
-      overflow-y: auto;
-      flex: 1;
-    }
+    .modal-body { padding: 12px 16px; overflow-y: auto; flex: 1; }
     #toast {
       position: fixed;
       top: 54px;
@@ -510,9 +590,7 @@
       pointer-events: none;
       transition: opacity 0.2s ease;
     }
-    #toast.show {
-      opacity: 1;
-    }
+    #toast.show { opacity: 1; }
   </style>
 
   <!-- Firebase SDKs -->
@@ -564,57 +642,70 @@
   </div>
 
   <main class="container">
-    <!-- 1. DEFAULT OVERVIEW / GLANCE TAB -->
+    <!-- 1. WIDGET-STYLE OVERVIEW / DASHBOARD TAB -->
     <section id="view-dashboard" class="section-view active">
-      <div class="glance-hero">
-        <div class="glance-stat" onclick="switchTab('view-reminders')">
-          <span class="glance-stat-num" id="stat-alerts" style="color: var(--danger);">0</span>
-          <span class="glance-stat-label">Alerts</span>
+      <!-- HERO WIDGET -->
+      <div class="widget-hero">
+        <div class="widget-hero-header">
+          <span class="widget-hero-title">Today's Pulse</span>
+          <span id="progress-percent" style="font-size: 12px; font-weight: 700; color: var(--primary);">0% Done</span>
         </div>
-        <div class="glance-stat" onclick="switchTab('view-priorities')">
-          <span class="glance-stat-num" id="stat-priorities" style="color: var(--warning);">0</span>
-          <span class="glance-stat-label">Priorities</span>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
         </div>
-        <div class="glance-stat" onclick="switchTab('view-todos')">
-          <span class="glance-stat-num" id="stat-tasks" style="color: var(--primary);">0</span>
-          <span class="glance-stat-label">Tasks</span>
-        </div>
-        <div class="glance-stat" onclick="switchTab('view-time')">
-          <span class="glance-stat-num" id="stat-events" style="color: var(--accent);">0</span>
-          <span class="glance-stat-label">Events</span>
+        <div class="stats-tiles">
+          <div class="stat-tile" onclick="switchTab('view-reminders')">
+            <div class="stat-num" id="stat-alerts" style="color: var(--danger);">0</div>
+            <div class="stat-sub">Alerts</div>
+          </div>
+          <div class="stat-tile" onclick="switchTab('view-priorities')">
+            <div class="stat-num" id="stat-priorities" style="color: var(--warning);">0</div>
+            <div class="stat-sub">Priorities</div>
+          </div>
+          <div class="stat-tile" onclick="switchTab('view-todos')">
+            <div class="stat-num" id="stat-tasks" style="color: var(--primary);">0</div>
+            <div class="stat-sub">Tasks</div>
+          </div>
+          <div class="stat-tile" onclick="switchTab('view-time')">
+            <div class="stat-num" id="stat-events" style="color: var(--accent);">0</div>
+            <div class="stat-sub">Events</div>
+          </div>
         </div>
       </div>
 
-      <div class="overview-section-card" id="card-overview-alerts">
-        <div class="overview-header">
-          <span>🚨 Must Not Forget</span>
-          <span class="jump-link" onclick="switchTab('view-reminders')">Open →</span>
+      <!-- WIDGET GRID -->
+      <div class="widget-grid">
+        <div class="widget-card">
+          <div class="widget-head">
+            <span class="widget-title"><span style="color: var(--danger);">🚨</span> Alerts</span>
+            <span class="widget-action" onclick="switchTab('view-reminders')">View →</span>
+          </div>
+          <div class="widget-body" id="overview-alerts-list"></div>
         </div>
-        <div class="overview-body" id="overview-alerts-list"></div>
-      </div>
 
-      <div class="overview-section-card">
-        <div class="overview-header">
-          <span>⭐ Top Priorities</span>
-          <span class="jump-link" onclick="switchTab('view-priorities')">Add / Manage →</span>
+        <div class="widget-card">
+          <div class="widget-head">
+            <span class="widget-title"><span style="color: var(--warning);">⭐</span> Priorities</span>
+            <span class="widget-action" onclick="switchTab('view-priorities')">Manage →</span>
+          </div>
+          <div class="widget-body" id="overview-priorities-list"></div>
         </div>
-        <div class="overview-body" id="overview-priorities-list"></div>
-      </div>
 
-      <div class="overview-section-card">
-        <div class="overview-header">
-          <span>📅 Today's Schedule</span>
-          <span class="jump-link" onclick="switchTab('view-time')">Calendar →</span>
+        <div class="widget-card widget-full">
+          <div class="widget-head">
+            <span class="widget-title"><span>🕒</span> Schedule & Meetings</span>
+            <span class="widget-action" onclick="switchTab('view-time')">Calendar →</span>
+          </div>
+          <div class="widget-body" id="overview-events-list"></div>
         </div>
-        <div class="overview-body" id="overview-events-list"></div>
-      </div>
 
-      <div class="overview-section-card">
-        <div class="overview-header">
-          <span>📋 Daily Tasks & Subtasks</span>
-          <span class="jump-link" onclick="switchTab('view-todos')">All Tasks →</span>
+        <div class="widget-card widget-full">
+          <div class="widget-head">
+            <span class="widget-title"><span>📋</span> Tasks & Checklist</span>
+            <span class="widget-action" onclick="switchTab('view-todos')">All Tasks →</span>
+          </div>
+          <div class="widget-body" id="overview-todos-list"></div>
         </div>
-        <div class="overview-body" id="overview-todos-list"></div>
       </div>
     </section>
 
@@ -624,6 +715,7 @@
         <div class="card-title">Add Daily To-Do</div>
         <form id="todo-form">
           <input type="text" id="todo-input" class="input-field" placeholder="What needs to be done?" required style="margin-bottom: 8px;">
+
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
             <div>
               <label style="font-size: 11px; color: var(--text-muted);">Category</label>
@@ -641,9 +733,66 @@
               </select>
             </div>
           </div>
+
+          <!-- Customizable Tags -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted);">Custom Tag (Optional)</label>
+              <input type="text" id="todo-custom-tag" class="input-field" placeholder="e.g. #deepwork, #meeting">
+            </div>
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted);">Tag Color</label>
+              <select id="todo-tag-color">
+                <option value="blue">Blue</option>
+                <option value="purple">Purple</option>
+                <option value="green">Green</option>
+                <option value="amber">Amber</option>
+                <option value="red">Red</option>
+                <option value="pink">Pink</option>
+                <option value="cyan">Cyan</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Recurring Frequency -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <div>
+              <label style="font-size: 11px; color: var(--text-muted);">Repeat</label>
+              <select id="todo-repeat" onchange="toggleRepeatOptions()">
+                <option value="none">No Repeat</option>
+                <option value="daily">Daily</option>
+                <option value="weekly_days">Weekly (Specific Days)</option>
+                <option value="monthly">Monthly</option>
+                <option value="custom">Custom (Every X Days)</option>
+              </select>
+            </div>
+            <div id="custom-repeat-box" style="display: none;">
+              <label style="font-size: 11px; color: var(--text-muted);">Every X Days</label>
+              <input type="number" id="todo-repeat-interval" class="input-field" min="2" max="365" value="3">
+            </div>
+          </div>
+
+          <!-- Specific Day(s) of Week Selector -->
+          <div id="weekdays-repeat-box" style="display: none; margin-bottom: 10px;">
+            <label style="font-size: 11px; color: var(--text-muted);">Repeat On Weekdays (Tap to select)</label>
+            <div class="weekday-selector">
+              <div class="weekday-btn" data-day="1" onclick="toggleWeekdaySelection(this)">Mon</div>
+              <div class="weekday-btn" data-day="2" onclick="toggleWeekdaySelection(this)">Tue</div>
+              <div class="weekday-btn" data-day="3" onclick="toggleWeekdaySelection(this)">Wed</div>
+              <div class="weekday-btn" data-day="4" onclick="toggleWeekdaySelection(this)">Thu</div>
+              <div class="weekday-btn" data-day="5" onclick="toggleWeekdaySelection(this)">Fri</div>
+              <div class="weekday-btn" data-day="6" onclick="toggleWeekdaySelection(this)">Sat</div>
+              <div class="weekday-btn" data-day="0" onclick="toggleWeekdaySelection(this)">Sun</div>
+            </div>
+          </div>
+
           <button type="submit" class="btn" style="width: 100%;">Add Task</button>
         </form>
       </div>
+
+      <!-- Tag Filter Bar -->
+      <div id="task-filter-container" class="filter-tags-scroll"></div>
+
       <div id="todo-list"></div>
     </section>
 
@@ -714,7 +863,7 @@
   <nav class="bottom-nav">
     <button class="nav-tab active" data-target="view-dashboard">
       <span>📊</span>
-      <span>Overview</span>
+      <span>Widgets</span>
     </button>
     <button class="nav-tab" data-target="view-todos">
       <span>📋</span>
@@ -740,25 +889,23 @@
 
   <script>
     const firebaseConfig = {
-  apiKey: "AIzaSyDloSYo4PdDCE_RF_mERU2pmzZLz0Nd2XI",
-  authDomain: "daily-planner-fe3e1.firebaseapp.com",
-  projectId: "daily-planner-fe3e1",
-  storageBucket: "daily-planner-fe3e1.firebasestorage.app",
-  messagingSenderId: "995038754697",
-  appId: "1:995038754697:web:636b67edae269e73805358",
-  measurementId: "G-0S7JEZBTKR"
-};
+      apiKey: "AIzaSyDloSYo4PdDCE_RF_mERU2pmzZLz0Nd2XI",
+      authDomain: "daily-planner-fe3e1.firebaseapp.com",
+      projectId: "daily-planner-fe3e1",
+      storageBucket: "daily-planner-fe3e1.firebasestorage.app",
+      messagingSenderId: "995038754697",
+      appId: "1:995038754697:web:636b67edae269e73805358",
+      measurementId: "G-0S7JEZBTKR"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Enable offline persistence for Firestore if supported
     try {
       db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
     } catch (e) {}
 
-    // 2. Date Initialization (Declared before Auth & Listeners to prevent ReferenceErrors)
     function formatLocalDate(d = new Date()) {
       const year = d.getFullYear();
       const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -768,8 +915,8 @@
 
     const todayDateString = formatLocalDate(new Date());
     let selectedDateString = todayDateString;
+    let selectedTagFilter = "ALL";
 
-    // 3. Local Storage Helpers
     const PREFIX = "daily_planner_";
 
     function getDB(k, fallback) {
@@ -805,14 +952,12 @@
 
     let currentDayData = loadDay(selectedDateString);
     let reminders = getDB("reminders", []);
+    let recurringTemplates = getDB("recurring_templates", []);
 
-    // 4. Cloud Real-Time Listener & Storage Sync
     let unsubscribeSnapshot = null;
 
     function listenToCloudData(dateStr) {
-      if (unsubscribeSnapshot) {
-        unsubscribeSnapshot();
-      }
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
 
       if (currentUser) {
         unsubscribeSnapshot = db.collection("users").doc(currentUser.uid)
@@ -829,6 +974,8 @@
                 journalPersonal: ""
               };
             }
+
+            processRolloverAndRecurring(dateStr);
 
             const workPad = document.getElementById("journal-work-pad");
             const personalPad = document.getElementById("journal-personal-pad");
@@ -858,7 +1005,129 @@
       }
     }
 
-    // 5. Auth State & Button Handling
+    // --- RECURRING & ROLLOVER LOGIC ---
+    function toggleRepeatOptions() {
+      const rep = document.getElementById("todo-repeat").value;
+      document.getElementById("custom-repeat-box").style.display = rep === "custom" ? "block" : "none";
+      document.getElementById("weekdays-repeat-box").style.display = rep === "weekly_days" ? "block" : "none";
+    }
+
+    function toggleWeekdaySelection(el) {
+      el.classList.toggle("selected");
+    }
+
+    function getSelectedWeekdays() {
+      const selected = [];
+      document.querySelectorAll(".weekday-btn.selected").forEach(btn => {
+        selected.push(parseInt(btn.getAttribute("data-day"), 10));
+      });
+      return selected;
+    }
+
+    function resetWeekdaySelection() {
+      document.querySelectorAll(".weekday-btn").forEach(btn => btn.classList.remove("selected"));
+    }
+
+    function getDayNameShort(num) {
+      return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][num];
+    }
+
+    function getPreviousDateString(dateStr) {
+      const [y, m, d] = dateStr.split("-").map(Number);
+      return formatLocalDate(new Date(y, m - 1, d - 1));
+    }
+
+    function daysDifference(date1Str, date2Str) {
+      const d1 = new Date(date1Str);
+      const d2 = new Date(date2Str);
+      const diffTime = d2.getTime() - d1.getTime();
+      return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    function isTaskDueOnDate(template, targetDateStr) {
+      if (targetDateStr < template.startDate) return false;
+      const [y, m, d] = targetDateStr.split("-").map(Number);
+      const targetDate = new Date(y, m - 1, d);
+      const diffDays = daysDifference(template.startDate, targetDateStr);
+      if (diffDays < 0) return false;
+
+      if (template.repeat === "daily") return true;
+
+      // Handle custom multi-day of week selection
+      if (template.repeat === "weekly_days") {
+        const targetDay = targetDate.getDay(); // 0: Sun, 1: Mon, ..., 6: Sat
+        return Array.isArray(template.weekdays) && template.weekdays.includes(targetDay);
+      }
+
+      if (template.repeat === "monthly") {
+        const [sy, sm, sd] = template.startDate.split("-").map(Number);
+        return sd === d;
+      }
+      if (template.repeat === "custom") {
+        const interval = Number(template.interval) || 1;
+        return diffDays % interval === 0;
+      }
+      return false;
+    }
+
+    function processRolloverAndRecurring(dateStr) {
+      let modified = false;
+      if (!currentDayData.todos) currentDayData.todos = [];
+
+      // 1. CARRY OVER: Unfinished tasks from previous day
+      const prevDateStr = getPreviousDateString(dateStr);
+      const prevDay = loadDay(prevDateStr);
+      if (prevDay && prevDay.todos && prevDay.todos.length > 0) {
+        prevDay.todos.forEach(prevTask => {
+          if (!prevTask.completed) {
+            const alreadyCarried = currentDayData.todos.some(t =>
+              t.carriedFromId === prevTask.id || (t.title === prevTask.title && t.carriedOver)
+            );
+            if (!alreadyCarried) {
+              currentDayData.todos.push({
+                ...prevTask,
+                id: Date.now().toString() + "_" + Math.random().toString(36).substr(2, 4),
+                carriedFromId: prevTask.id,
+                carriedOver: true,
+                completed: false,
+                subtasks: (prevTask.subtasks || []).map(s => ({ ...s, completed: false }))
+              });
+              modified = true;
+            }
+          }
+        });
+      }
+
+      // 2. RECURRING: Generate tasks matching schedule
+      recurringTemplates.forEach(template => {
+        if (isTaskDueOnDate(template, dateStr)) {
+          const alreadyExists = currentDayData.todos.some(t => t.recurringTemplateId === template.id);
+          if (!alreadyExists) {
+            currentDayData.todos.push({
+              id: Date.now().toString() + "_" + Math.random().toString(36).substr(2, 4),
+              recurringTemplateId: template.id,
+              title: template.title,
+              category: template.category,
+              type: template.type,
+              repeat: template.repeat,
+              weekdays: template.weekdays || [],
+              interval: template.interval,
+              tag: template.tag || "",
+              tagColor: template.tagColor || "blue",
+              completed: false,
+              subtasks: []
+            });
+            modified = true;
+          }
+        }
+      });
+
+      if (modified) {
+        saveDay(dateStr, currentDayData);
+      }
+    }
+
+    // --- AUTHENTICATION ---
     let currentUser = null;
     const authBtn = document.getElementById("auth-btn");
 
@@ -883,11 +1152,11 @@
         authBtn.textContent = "Sign In";
         showToast("Offline / Local mode");
         currentDayData = loadDay(selectedDateString);
+        processRolloverAndRecurring(selectedDateString);
         renderAll();
       }
     });
 
-    // 6. UI Synchronization
     function syncAll() {
       currentDayData.journalWork = document.getElementById("journal-work-pad").value;
       currentDayData.journalPersonal = document.getElementById("journal-personal-pad").value;
@@ -917,80 +1186,99 @@
       tab.addEventListener("click", () => switchTab(tab.getAttribute("data-target")));
     });
 
-    // RENDER: Overview Tab
+    // --- RENDERING ---
     function renderOverview() {
-      const pendingTodos = (currentDayData.todos || []).filter(t => !t.completed);
-      const pendingPriorities = (currentDayData.priorities || []).filter(p => !p.completed);
+      const allTodos = currentDayData.todos || [];
+      const pendingTodos = allTodos.filter(t => !t.completed);
+      const completedTodos = allTodos.filter(t => t.completed);
+
+      const allPriorities = currentDayData.priorities || [];
+      const pendingPriorities = allPriorities.filter(p => !p.completed);
+
+      const totalTracked = allTodos.length + allPriorities.length;
+      const totalCompleted = completedTodos.length + (allPriorities.length - pendingPriorities.length);
+      const percentage = totalTracked === 0 ? 0 : Math.round((totalCompleted / totalTracked) * 100);
+
+      document.getElementById("progress-percent").textContent = `${percentage}% Done`;
+      document.getElementById("progress-fill").style.width = `${percentage}%`;
 
       document.getElementById("stat-alerts").textContent = reminders.length;
       document.getElementById("stat-priorities").textContent = pendingPriorities.length;
       document.getElementById("stat-tasks").textContent = pendingTodos.length;
       document.getElementById("stat-events").textContent = (currentDayData.events || []).length;
 
-      // Alerts
+      // Alerts Widget
       const alertsEl = document.getElementById("overview-alerts-list");
       if (reminders.length === 0) {
-        alertsEl.innerHTML = `<div class="glance-empty">No critical alerts pinned.</div>`;
+        alertsEl.innerHTML = `<div class="widget-empty">No critical alerts.</div>`;
       } else {
         alertsEl.innerHTML = reminders.map((r, i) => `
-          <div class="glance-item">
-            <span style="font-size: 16px;">⚠️</span>
-            <span style="flex: 1; font-weight: 600; font-size: 13px;">${r.text}</span>
-            <button class="btn btn-secondary btn-sm" onclick="deleteReminder(${i})">Done</button>
+          <div class="widget-item">
+            <span style="font-size: 14px;">⚠️</span>
+            <span style="flex: 1; font-weight: 600; font-size: 12px;">${r.text}</span>
+            <button class="btn btn-secondary btn-sm" onclick="deleteReminder(${i})">✓</button>
           </div>
         `).join('');
       }
 
-      // Priorities
+      // Priorities Widget
       const prioEl = document.getElementById("overview-priorities-list");
-      if ((currentDayData.priorities || []).length === 0) {
-        prioEl.innerHTML = `<div class="glance-empty">No priorities set for today.</div>`;
+      if (allPriorities.length === 0) {
+        prioEl.innerHTML = `<div class="widget-empty">No priorities set.</div>`;
       } else {
-        prioEl.innerHTML = currentDayData.priorities.map((p, i) => `
-          <div class="glance-item">
-            <input type="checkbox" ${p.completed ? 'checked' : ''} onchange="togglePriority(${i})" style="width: 17px; height: 17px; accent-color: var(--primary);">
-            <span style="flex: 1; ${p.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 500;'}">${p.text}</span>
-            ${p.starred ? '<span style="color: #f59e0b;">★</span>' : ''}
+        prioEl.innerHTML = allPriorities.map((p, i) => `
+          <div class="widget-item">
+            <input type="checkbox" ${p.completed ? 'checked' : ''} onchange="togglePriority(${i})" style="width: 15px; height: 15px; accent-color: var(--primary);">
+            <span style="flex: 1; ${p.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 500; font-size: 12px;'}">${p.text}</span>
+            ${p.starred ? '<span style="color: #f59e0b; font-size: 11px;">★</span>' : ''}
           </div>
         `).join('');
       }
 
-      // Events
+      // Events Widget
       const eventsEl = document.getElementById("overview-events-list");
       if ((currentDayData.events || []).length === 0) {
-        eventsEl.innerHTML = `<div class="glance-empty">No scheduled events for this date.</div>`;
+        eventsEl.innerHTML = `<div class="widget-empty">No scheduled events for this date.</div>`;
       } else {
         eventsEl.innerHTML = currentDayData.events.map((e) => `
-          <div class="glance-item">
-            <span style="font-size: 14px;">🕒</span>
-            <span style="font-weight: 700; font-size: 13px; color: var(--primary); min-width: 50px;">${e.time}</span>
-            <span style="flex: 1; font-weight: 500;">${e.title}</span>
+          <div class="widget-item">
+            <span style="font-size: 13px;">🕒</span>
+            <span style="font-weight: 700; font-size: 12px; color: var(--primary); min-width: 48px;">${e.time}</span>
+            <span style="flex: 1; font-weight: 500; font-size: 12px;">${e.title}</span>
           </div>
         `).join('');
       }
 
-      // Tasks
+      // Tasks Widget
       const tasksEl = document.getElementById("overview-todos-list");
-      if ((currentDayData.todos || []).length === 0) {
-        tasksEl.innerHTML = `<div class="glance-empty">No to-do items created.</div>`;
+      if (allTodos.length === 0) {
+        tasksEl.innerHTML = `<div class="widget-empty">No to-do items created.</div>`;
       } else {
-        tasksEl.innerHTML = currentDayData.todos.map(t => {
-          const subs = t.subtasks || [];
-          const doneSubs = subs.filter(s => s.completed).length;
-          let subsSummary = "";
-          if (subs.length > 0) {
-            subsSummary = `<div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">Subtasks: ${doneSubs}/${subs.length} completed</div>`;
+        tasksEl.innerHTML = allTodos.slice(0, 6).map(t => {
+          let recurringLabel = "";
+          if (t.repeat && t.repeat !== "none") {
+            if (t.repeat === "weekly_days" && Array.isArray(t.weekdays)) {
+              recurringLabel = t.weekdays.map(getDayNameShort).join(', ');
+            } else if (t.repeat === "custom") {
+              recurringLabel = `every ${t.interval}d`;
+            } else {
+              recurringLabel = t.repeat;
+            }
           }
+
           return `
-            <div class="glance-item" style="align-items: flex-start;">
-              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 3px; width: 17px; height: 17px; accent-color: var(--primary);">
+            <div class="widget-item" style="align-items: flex-start;">
+              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 2px; width: 15px; height: 15px; accent-color: var(--primary);">
               <div style="flex: 1;">
-                <div style="${t.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 600;'}">${t.title}</div>
-                <div style="display: flex; gap: 4px; margin-top: 4px;">
-                  <span class="badge badge-${t.category}">${t.category}</span>
-                  <span class="status-pill status-${t.type}">${t.type === 'urgent' ? '🔥 Urgent' : (t.type === 'dependent' ? '⏳ Dependent' : '🔄 In Progress')}</span>
+                <div style="${t.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 600; font-size: 13px;'}">
+                  ${t.title}
                 </div>
-                ${subsSummary}
+                <div style="display: flex; gap: 4px; margin-top: 3px; flex-wrap: wrap;">
+                  <span class="badge badge-${t.category}">${t.category}</span>
+                  ${t.tag ? `<span class="tag-chip tag-${t.tagColor \vert{}\vert{} 'blue'}">${t.tag}</span>` : ''}
+                  ${t.carriedOver ? '<span class="badge badge-carried">Rolled Over</span>' : ''}
+                  ${recurringLabel ? `<span class="badge badge-recurring">🔁 ${recurringLabel}</span>` : ''}
+                </div>
               </div>
             </div>
           `;
@@ -998,15 +1286,52 @@
       }
     }
 
-    // RENDER: To-Dos
+    function renderTagFilters() {
+      const container = document.getElementById("task-filter-container");
+      if (!container) return;
+
+      const tags = new Set();
+      (currentDayData.todos || []).forEach(t => {
+        if (t.tag) tags.add(t.tag);
+      });
+
+      if (tags.size === 0) {
+        container.innerHTML = "";
+        return;
+      }
+
+      let html = `<div class="filter-pill ${selectedTagFilter === 'ALL' ? 'active' : ''}" onclick="setTagFilter('ALL')">All (${(currentDayData.todos || []).length})</div>`;
+      tags.forEach(tag => {
+        const count = (currentDayData.todos || []).filter(t => t.tag === tag).length;
+        html += `<div class="filter-pill ${selectedTagFilter === tag ? 'active' : ''}" onclick="setTagFilter('${tag}')">${tag} (${count})</div>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    window.setTagFilter = (tag) => {
+      selectedTagFilter = tag;
+      renderTodos();
+      renderTagFilters();
+    };
+
     function renderTodos() {
       const list = document.getElementById("todo-list");
       if (!list) return;
-      if ((currentDayData.todos || []).length === 0) {
-        list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px 0;">No tasks yet.</div>`;
+
+      renderTagFilters();
+
+      const allTodos = currentDayData.todos || [];
+      const displayedTodos = selectedTagFilter === "ALL" 
+        ? allTodos 
+        : allTodos.filter(t => t.tag === selectedTagFilter);
+
+      if (displayedTodos.length === 0) {
+        list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px 0;">No tasks found for this view.</div>`;
         return;
       }
-      list.innerHTML = currentDayData.todos.map(t => {
+
+      list.innerHTML = displayedTodos.map(t => {
         const subsHtml = (t.subtasks || []).map((st, sIdx) => `
           <div class="subtask-item ${st.completed ? 'subtask-completed' : ''}">
             <input type="checkbox" ${st.completed ? 'checked' : ''} onchange="toggleSubtask('${t.id}', ${sIdx})" style="accent-color: var(--primary);">
@@ -1017,19 +1342,34 @@
           </div>
         `).join('');
 
+        let recurringLabel = "";
+        if (t.repeat && t.repeat !== "none") {
+          if (t.repeat === "weekly_days" && Array.isArray(t.weekdays)) {
+            recurringLabel = t.weekdays.map(getDayNameShort).join(', ');
+          } else if (t.repeat === "custom") {
+            recurringLabel = `every ${t.interval}d`;
+          } else {
+            recurringLabel = t.repeat;
+          }
+        }
+
         return `
           <div class="todo-item ${t.completed ? 'todo-completed' : ''}">
             <div class="todo-header">
               <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 3px; width: 17px; height: 17px; accent-color: var(--primary);">
               <div style="flex: 1;">
                 <div class="todo-title">${t.title}</div>
-                <div style="display: flex; gap: 4px; margin-top: 5px;">
+                <div style="display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap;">
                   <span class="badge badge-${t.category}">${t.category}</span>
                   <span class="status-pill status-${t.type}">${t.type === 'urgent' ? '🔥 Urgent' : (t.type === 'dependent' ? '⏳ Dependent' : '🔄 In Progress')}</span>
+                  ${t.tag ? `<span class="tag-chip tag-${t.tagColor \vert{}\vert{} 'blue'}">${t.tag}</span>` : ''}
+                  ${t.carriedOver ? '<span class="badge badge-carried">Rolled Over</span>' : ''}
+                  ${recurringLabel ? `<span class="badge badge-recurring">🔁 ${recurringLabel}</span>` : ''}
                 </div>
               </div>
               <div style="display: flex; gap: 4px;">
-                <button class="btn btn-secondary btn-sm" onclick="renameTodo('${t.id}')" title="Rename Task">✏️</button>
+                <button class="btn btn-secondary btn-sm" onclick="promptAddTag('${t.id}')" title="Set Tag">+Tag</button>
+                <button class="btn btn-secondary btn-sm" onclick="renameTodo('${t.id}')" title="Rename Task">✏️️</button>
                 <button class="btn btn-secondary btn-sm" onclick="toggleSubInput('${t.id}')">+Sub</button>
                 <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deleteTodo('${t.id}')">✕</button>
               </div>
@@ -1051,7 +1391,6 @@
       }).join('');
     }
 
-    // RENDER: Priorities
     function renderPriorities() {
       const list = document.getElementById("priority-list");
       if (!list) return;
@@ -1069,7 +1408,6 @@
       `).join('');
     }
 
-    // RENDER: Events
     function renderEvents() {
       const list = document.getElementById("event-list");
       if (!list) return;
@@ -1088,7 +1426,6 @@
       `).join('');
     }
 
-    // RENDER: Reminders
     function renderReminders() {
       const list = document.getElementById("reminder-list");
       if (!list) return;
@@ -1112,23 +1449,82 @@
       renderReminders();
     }
 
-    // ACTION HANDLERS
+    // --- FORM ACTIONS ---
     document.getElementById("todo-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const inp = document.getElementById("todo-input");
+      const title = inp.value.trim();
+      const category = document.getElementById("todo-category").value;
+      const type = document.getElementById("todo-type").value;
+      const repeat = document.getElementById("todo-repeat").value;
+      const interval = repeat === "custom" ? document.getElementById("todo-repeat-interval").value : null;
+      const selectedWeekdays = repeat === "weekly_days" ? getSelectedWeekdays() : [];
+
+      if (repeat === "weekly_days" && selectedWeekdays.length === 0) {
+        alert("Please select at least one weekday for weekly recurrence.");
+        return;
+      }
+
+      let tag = document.getElementById("todo-custom-tag").value.trim();
+      if (tag && !tag.startsWith("#")) tag = "#" + tag;
+      const tagColor = document.getElementById("todo-tag-color").value;
+
       if (!currentDayData.todos) currentDayData.todos = [];
+
+      const newTaskId = Date.now().toString();
+
+      if (repeat !== "none") {
+        recurringTemplates.push({
+          id: "rep_" + newTaskId,
+          title,
+          category,
+          type,
+          repeat,
+          weekdays: selectedWeekdays,
+          interval,
+          tag,
+          tagColor,
+          startDate: selectedDateString
+        });
+        setDB("recurring_templates", recurringTemplates);
+      }
+
       currentDayData.todos.unshift({
-        id: Date.now().toString(),
-        title: inp.value.trim(),
-        category: document.getElementById("todo-category").value,
-        type: document.getElementById("todo-type").value,
+        id: newTaskId,
+        recurringTemplateId: repeat !== "none" ? "rep_" + newTaskId : null,
+        title,
+        category,
+        type,
+        repeat,
+        weekdays: selectedWeekdays,
+        interval,
+        tag,
+        tagColor,
         completed: false,
         subtasks: []
       });
+
       inp.value = "";
+      document.getElementById("todo-custom-tag").value = "";
+      document.getElementById("todo-repeat").value = "none";
+      resetWeekdaySelection();
+      toggleRepeatOptions();
       syncAll();
       showToast("Task added");
     });
+
+    window.promptAddTag = (id) => {
+      const task = currentDayData.todos.find(t => t.id === id);
+      if (!task) return;
+      let val = prompt("Enter tag name (e.g. #focus, #work):", task.tag || "");
+      if (val !== null) {
+        val = val.trim();
+        if (val && !val.startsWith("#")) val = "#" + val;
+        task.tag = val;
+        syncAll();
+        showToast("Tag updated");
+      }
+    };
 
     window.renameTodo = (id) => {
       const task = currentDayData.todos.find(t => t.id === id);
@@ -1165,6 +1561,13 @@
     };
 
     window.deleteTodo = (id) => {
+      const task = currentDayData.todos.find(t => t.id === id);
+      if (task && task.recurringTemplateId) {
+        if (confirm("Stop future repeats for this task as well?")) {
+          recurringTemplates = recurringTemplates.filter(r => r.id !== task.recurringTemplateId);
+          setDB("recurring_templates", recurringTemplates);
+        }
+      }
       currentDayData.todos = currentDayData.todos.filter(t => t.id !== id);
       syncAll();
     };
@@ -1289,7 +1692,7 @@
       syncAll();
     };
 
-    // JOURNAL WORK/PERSONAL
+    // --- JOURNAL ---
     window.setJournalSegment = (type) => {
       document.getElementById("seg-btn-work").classList.toggle("active", type === 'work');
       document.getElementById("seg-btn-personal").classList.toggle("active", type === 'personal');
@@ -1314,7 +1717,7 @@
       saveDay(selectedDateString, currentDayData);
     });
 
-    // THEME & BACKUP
+    // --- THEME & BACKUP ---
     document.getElementById("theme-btn").addEventListener("click", () => {
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
       document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark");
@@ -1328,7 +1731,7 @@
       a.click();
     });
 
-    // DATE NAVIGATION & HISTORY MODAL
+    // --- DATE NAVIGATION & CALENDAR ---
     function switchDate(newDate) {
       selectedDateString = newDate;
 
@@ -1340,6 +1743,7 @@
         listenToCloudData(selectedDateString);
       } else {
         currentDayData = loadDay(selectedDateString);
+        processRolloverAndRecurring(selectedDateString);
         document.getElementById("journal-work-pad").value = currentDayData.journalWork || "";
         document.getElementById("journal-personal-pad").value = currentDayData.journalPersonal || "";
         renderAll();
