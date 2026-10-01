@@ -8,81 +8,117 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="theme-color" content="#0f172a">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #f1f5f9;
+      --bg: #f3f6fc;
       --surface: #ffffff;
       --surface-subtle: #f8fafc;
-      --surface-card: rgba(255, 255, 255, 0.9);
+      --surface-glass: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.85);
       --text: #0f172a;
       --text-muted: #64748b;
-      --border: #e2e8f0;
+      --text-subtle: #94a3b8;
       --primary: #2563eb;
-      --primary-subtle: rgba(37, 99, 235, 0.08);
+      --primary-light: #eff6ff;
       --danger: #ef4444;
       --warning: #f59e0b;
       --accent: #8b5cf6;
       --success: #10b981;
-      --radius: 16px;
-      --radius-sm: 8px;
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --widget-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-pill: 9999px;
+      --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
+      --shadow-widget: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
+
     [data-theme="dark"] {
       --bg: #090d16;
-      --surface: #111827;
-      --surface-subtle: #1a2234;
-      --surface-card: rgba(17, 24, 39, 0.85);
+      --surface: #121929;
+      --surface-subtle: #182238;
+      --surface-glass: rgba(18, 25, 41, 0.85);
+      --border: rgba(35, 49, 84, 0.7);
       --text: #f1f5f9;
       --text-muted: #94a3b8;
-      --border: #233154;
+      --text-subtle: #64748b;
       --primary: #3b82f6;
-      --primary-subtle: rgba(59, 130, 246, 0.15);
+      --primary-light: rgba(59, 130, 246, 0.15);
       --danger: #f87171;
       --warning: #fbbf24;
       --accent: #a78bfa;
       --success: #34d399;
-      --widget-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.4);
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+      --shadow-widget: 0 10px 28px -4px rgba(0, 0, 0, 0.45);
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
+
     body {
       font-family: var(--font);
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.4;
-      font-size: 15px;
-      padding-bottom: 82px;
+      line-height: 1.45;
+      font-size: 14.5px;
+      padding-bottom: 90px;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
+
     .app-header {
-      background: var(--surface);
+      background: var(--surface-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
+      padding: 12px 18px;
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 45;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .app-title {
-      font-size: 1.05rem;
-      font-weight: 700;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
+
+    .app-title .brand-icon {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    }
+
     .header-actions {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+
     .icon-btn {
       background: var(--surface-subtle);
       border: 1px solid var(--border);
@@ -94,37 +130,49 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.05rem;
+      transition: all 0.15s ease;
     }
+
+    .icon-btn:active {
+      transform: scale(0.94);
+    }
+
     .date-bar {
-      background: var(--surface);
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 8px 14px;
+      padding: 9px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
-      top: 57px;
-      z-index: 35;
+      top: 61px;
+      z-index: 40;
     }
+
     .date-nav-group {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
+
     .date-display-box {
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
+      gap: 8px;
+      padding: 6px 14px;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 13px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 13.5px;
       color: var(--text);
+      cursor: pointer;
     }
+
     .date-picker-native {
       position: absolute;
       top: 0;
@@ -134,289 +182,321 @@
       opacity: 0;
       cursor: pointer;
     }
+
     .container {
-      max-width: 680px;
+      max-width: 740px;
       margin: 0 auto;
-      padding: 14px;
+      padding: 16px 16px 30px;
     }
+
     .section-view {
       display: none;
     }
+
     .section-view.active {
       display: block;
-      animation: fadeIn 0.15s ease-out;
+      animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* WIDGET DASHBOARD */
     .widget-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 14px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
     }
-    .widget-full {
-      grid-column: span 2;
-    }
-    .widget-card {
-      background: var(--surface-card);
+
+    .widget-hero-card {
+      grid-column: span 12;
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: var(--widget-shadow);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-widget);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
       position: relative;
-      backdrop-filter: blur(8px);
+      overflow: hidden;
     }
-    .widget-hero {
-      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-subtle) 100%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: var(--widget-shadow);
-    }
+
     .widget-hero-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-    }
-    .widget-hero-title {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
-    .progress-bar-bg {
-      width: 100%;
-      height: 7px;
-      background: var(--border);
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 6px 0 12px 0;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-    .stats-tiles {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-    .stat-tile {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 4px;
-      text-align: center;
-      cursor: pointer;
-    }
-    .stat-num {
-      font-size: 1.3rem;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-    .stat-sub {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .widget-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .widget-title {
-      font-size: 13px;
-      font-weight: 750;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .widget-action {
-      font-size: 11px;
-      color: var(--primary);
-      cursor: pointer;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .widget-body {
-      max-height: 220px;
-      overflow-y: auto;
-    }
-    .widget-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-    .widget-item:last-child {
-      border-bottom: none;
-    }
-    .widget-empty {
-      padding: 14px 0;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 12px;
     }
 
-    /* CARDS & INPUTS */
+    .widget-hero-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .widget-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .widget-stat-tile {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s;
+    }
+
+    .widget-stat-tile:active {
+      transform: scale(0.96);
+    }
+
+    .widget-stat-num {
+      font-size: 1.45rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      line-height: 1.1;
+    }
+
+    .widget-stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .widget-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-widget);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.15s ease;
+    }
+
+    .widget-col-12 { grid-column: span 12; }
+    .widget-col-6 { grid-column: span 6; }
+
+    @media (max-width: 600px) {
+      .widget-col-6 { grid-column: span 12; }
+      .widget-hero-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .widget-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-subtle);
+    }
+
+    .widget-badge-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .widget-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .widget-action-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .widget-body {
+      padding: 12px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .widget-empty {
+      padding: 20px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: var(--widget-shadow);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-widget);
     }
+
     .card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .input-field, select, textarea {
       width: 100%;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 11px;
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
       font-size: 14px;
       color: var(--text);
       outline: none;
       font-family: inherit;
+      transition: border-color 0.15s;
     }
+
     .input-field:focus, select:focus, textarea:focus {
       border-color: var(--primary);
+      background: var(--surface);
     }
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 8px 14px;
+      padding: 9px 16px;
       background: var(--primary);
       color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       gap: 6px;
       touch-action: manipulation;
+      transition: opacity 0.15s, transform 0.15s;
     }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
     .btn-secondary {
       background: var(--surface-subtle);
       color: var(--text);
       border: 1px solid var(--border);
     }
+
     .btn-danger {
       background: var(--danger);
       color: #ffffff;
     }
+
     .btn-sm {
-      padding: 3px 8px;
-      font-size: 12px;
+      padding: 4px 10px;
+      font-size: 11.5px;
       border-radius: 6px;
     }
 
-    /* BADGES & TAGS */
+    /* Tag System Chips & Badges */
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .tag-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 0 10px;
+      scrollbar-width: none;
+      margin-bottom: 8px;
+    }
+
+    .tag-filter-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tag-filter-pill {
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .tag-filter-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      font-weight: 700;
+    }
+
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      padding: 2px 7px;
-      font-size: 10px;
-      font-weight: 600;
-      border-radius: 999px;
-    }
-    .badge-work { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
-    .badge-personal { background: rgba(16, 185, 129, 0.12); color: #10b981; }
-    .badge-recurring { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
-    .badge-carried { background: rgba(245, 158, 11, 0.15); color: #d97706; border: 1px dashed rgba(245, 158, 11, 0.4); }
-
-    .tag-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      padding: 2px 7px;
-      font-size: 10px;
-      font-weight: 600;
-      border-radius: 6px;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .tag-blue { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
-    .tag-green { background: rgba(16, 185, 129, 0.12); color: #10b981; }
-    .tag-purple { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
-    .tag-amber { background: rgba(245, 158, 11, 0.15); color: #d97706; }
-    .tag-red { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
-    .tag-pink { background: rgba(236, 72, 153, 0.12); color: #db2777; }
-    .tag-cyan { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
-
-    /* WEEKDAYS PICKER */
-    .weekday-selector {
-      display: flex;
-      gap: 4px;
-      justify-content: space-between;
-      margin-top: 6px;
-    }
-    .weekday-btn {
-      flex: 1;
-      padding: 6px 0;
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      padding: 2.5px 8px;
       font-size: 11px;
       font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-      text-align: center;
-      user-select: none;
-      transition: all 0.15s ease;
-    }
-    .weekday-btn.selected {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
+      border-radius: var(--radius-pill);
     }
 
-    .filter-tags-scroll {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-      scrollbar-width: none;
+    .badge-work {
+      background: rgba(37, 99, 235, 0.12);
+      color: #2563eb;
     }
-    .filter-tags-scroll::-webkit-scrollbar { display: none; }
-    .filter-pill {
-      white-space: nowrap;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      cursor: pointer;
-      color: var(--text-muted);
+
+    .badge-personal {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
     }
-    .filter-pill.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+
+    .badge-recurring {
+      background: rgba(139, 92, 246, 0.12);
+      color: #8b5cf6;
+    }
+
+    .badge-carried {
+      background: rgba(245, 158, 11, 0.14);
+      color: #d97706;
+      border: 1px dashed rgba(245, 158, 11, 0.5);
     }
 
     .status-pill {
@@ -424,29 +504,80 @@
       align-items: center;
       gap: 3px;
       padding: 2px 7px;
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--surface-subtle);
     }
-    .status-urgent { background: rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.3); color: #ef4444; }
-    .status-in_progress { background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3); color: #d97706; }
-    .status-dependent { background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.3); color: #8b5cf6; }
+
+    .status-urgent {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: #ef4444;
+    }
+
+    .status-in_progress {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.25);
+      color: #d97706;
+    }
+
+    .status-dependent {
+      background: rgba(139, 92, 246, 0.1);
+      border-color: rgba(139, 92, 246, 0.25);
+      color: #8b5cf6;
+    }
 
     .todo-item {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 12px;
-      margin-bottom: 8px;
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 9px;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s ease;
     }
-    .todo-header { display: flex; align-items: flex-start; gap: 8px; }
-    .todo-title { font-weight: 600; font-size: 14px; word-break: break-word; }
-    .todo-completed .todo-title { text-decoration: line-through; color: var(--text-muted); }
 
-    .subtask-item { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 13px; }
-    .subtask-completed { text-decoration: line-through; color: var(--text-muted); }
+    .todo-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .todo-checkbox {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .todo-title {
+      font-weight: 700;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .todo-completed .todo-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .subtask-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      font-size: 13px;
+      padding: 3px 0;
+    }
+
+    .subtask-completed {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
     .subtask-chip-btn {
       font-size: 11px;
       padding: 2px 6px;
@@ -460,15 +591,32 @@
     .priority-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
+      gap: 10px;
+      padding: 10px 12px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-md);
       margin-bottom: 6px;
+      box-shadow: var(--shadow-sm);
     }
-    .star-btn { background: none; border: none; font-size: 18px; color: var(--border); cursor: pointer; }
-    .star-btn.starred { color: #f59e0b; }
+
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 19px;
+      color: var(--border);
+      cursor: pointer;
+      padding: 0 2px;
+      transition: transform 0.15s ease;
+    }
+
+    .star-btn:active {
+      transform: scale(1.2);
+    }
+
+    .star-btn.starred {
+      color: #f59e0b;
+    }
 
     .reminder-card {
       border-left: 4px solid var(--danger);
@@ -476,38 +624,42 @@
       border-top: 1px solid var(--border);
       border-right: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 9px 12px;
-      margin-bottom: 6px;
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: var(--shadow-sm);
     }
 
     .journal-segmented {
       display: flex;
       background: var(--surface-subtle);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2px;
-      margin-bottom: 12px;
-      gap: 2px;
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      margin-bottom: 14px;
+      gap: 4px;
     }
+
     .journal-segment-btn {
       flex: 1;
       border: none;
       background: transparent;
-      padding: 7px;
-      font-size: 12px;
-      font-weight: 600;
+      padding: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
       color: var(--text-muted);
       border-radius: 6px;
       cursor: pointer;
+      transition: all 0.15s;
     }
+
     .journal-segment-btn.active {
       background: var(--surface);
       color: var(--text);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
 
     .bottom-nav {
@@ -515,31 +667,42 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: var(--surface);
+      background: var(--surface-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid var(--border);
       display: flex;
       overflow-x: auto;
       z-index: 50;
       scrollbar-width: none;
     }
-    .bottom-nav::-webkit-scrollbar { display: none; }
+
+    .bottom-nav::-webkit-scrollbar {
+      display: none;
+    }
+
     .nav-tab {
       flex: 1;
-      min-width: 52px;
-      padding: 8px 2px 6px 2px;
+      min-width: 54px;
+      padding: 10px 4px 8px;
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 0.7rem;
-      font-weight: 500;
+      font-size: 0.72rem;
+      font-weight: 600;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
       cursor: pointer;
       white-space: nowrap;
+      transition: color 0.15s;
     }
-    .nav-tab.active { color: var(--primary); font-weight: 700; }
+
+    .nav-tab.active {
+      color: var(--primary);
+      font-weight: 800;
+    }
 
     .modal-overlay {
       display: none;
@@ -548,49 +711,91 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
       z-index: 100;
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
-    .modal-overlay.open { display: flex; }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
     .modal-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
       width: 100%;
       max-width: 440px;
-      max-height: 80vh;
+      max-height: 82vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      animation: modalSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
+    @keyframes modalSlide {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     .modal-header {
-      padding: 12px 16px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 1rem;
     }
-    .modal-body { padding: 12px 16px; overflow-y: auto; flex: 1; }
+
+    .modal-body {
+      padding: 14px 18px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
     #toast {
       position: fixed;
-      top: 54px;
+      top: 56px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
       color: white;
-      padding: 5px 14px;
-      border-radius: 20px;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
       font-size: 12px;
-      z-index: 100;
+      font-weight: 600;
+      z-index: 120;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-    #toast.show { opacity: 1; }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(4px);
+    }
+
+    /* Tag color picker options */
+    .color-dot-radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .color-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 2px solid transparent;
+    }
   </style>
 
   <!-- Firebase SDKs -->
@@ -602,7 +807,7 @@
 
   <header class="app-header">
     <div class="app-title">
-      <span>⚡</span>
+      <span class="brand-icon">⚡</span>
       <span id="header-date">Daily Planner</span>
     </div>
     <div class="header-actions">
@@ -613,21 +818,20 @@
     </div>
   </header>
 
-  <!-- Date Navigation Bar -->
+  <!-- Sticky Date Navigation Bar -->
   <div class="date-bar">
     <div class="date-nav-group">
-      <button class="icon-btn" id="prev-day-btn" style="width: 30px; height: 30px; font-size: 11px;">◀</button>
-      <div class="date-display-box">
+      <button class="icon-btn" id="prev-day-btn" style="width: 32px; height: 32px; font-size: 11px;">◀</button>
+      <div class="date-display-box" title="Click to choose a date">
         <span>📅</span>
         <span id="current-date-label">Today</span>
         <input type="date" id="native-date-input" class="date-picker-native">
       </div>
-      <button class="icon-btn" id="next-day-btn" style="width: 30px; height: 30px; font-size: 11px;">▶</button>
+      <button class="icon-btn" id="next-day-btn" style="width: 32px; height: 32px; font-size: 11px;">▶</button>
     </div>
     <button class="btn btn-secondary btn-sm" id="today-jump-btn" style="display: none;">Today</button>
   </div>
 
-  <!-- Toast -->
   <div id="toast">Saved</div>
 
   <!-- History Modal -->
@@ -642,90 +846,116 @@
   </div>
 
   <main class="container">
-    <!-- 1. WIDGET-STYLE OVERVIEW / DASHBOARD TAB -->
+    <!-- 1. DASHBOARD WITH WIDGETS -->
     <section id="view-dashboard" class="section-view active">
-      <!-- HERO WIDGET -->
-      <div class="widget-hero">
-        <div class="widget-hero-header">
-          <span class="widget-hero-title">Today's Pulse</span>
-          <span id="progress-percent" style="font-size: 12px; font-weight: 700; color: var(--primary);">0% Done</span>
-        </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-fill"></div>
-        </div>
-        <div class="stats-tiles">
-          <div class="stat-tile" onclick="switchTab('view-reminders')">
-            <div class="stat-num" id="stat-alerts" style="color: var(--danger);">0</div>
-            <div class="stat-sub">Alerts</div>
-          </div>
-          <div class="stat-tile" onclick="switchTab('view-priorities')">
-            <div class="stat-num" id="stat-priorities" style="color: var(--warning);">0</div>
-            <div class="stat-sub">Priorities</div>
-          </div>
-          <div class="stat-tile" onclick="switchTab('view-todos')">
-            <div class="stat-num" id="stat-tasks" style="color: var(--primary);">0</div>
-            <div class="stat-sub">Tasks</div>
-          </div>
-          <div class="stat-tile" onclick="switchTab('view-time')">
-            <div class="stat-num" id="stat-events" style="color: var(--accent);">0</div>
-            <div class="stat-sub">Events</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- WIDGET GRID -->
       <div class="widget-grid">
-        <div class="widget-card">
-          <div class="widget-head">
-            <span class="widget-title"><span style="color: var(--danger);">🚨</span> Alerts</span>
-            <span class="widget-action" onclick="switchTab('view-reminders')">View →</span>
+        
+        <!-- Hero Glance Widget -->
+        <div class="widget-hero-card">
+          <div class="widget-hero-header">
+            <div>
+              <div class="widget-hero-title">Today's Pulse</div>
+              <div style="font-size: 12px; color: var(--text-muted);" id="widget-date-subtitle">Loading...</div>
+            </div>
+            <div id="completion-progress-badge" class="widget-badge-tag" style="background: var(--primary-light); color: var(--primary);">
+              0% Done
+            </div>
+          </div>
+          <div class="widget-hero-stats">
+            <div class="widget-stat-tile" onclick="switchTab('view-reminders')">
+              <span class="widget-stat-num" id="stat-alerts" style="color: var(--danger);">0</span>
+              <span class="widget-stat-label">Alerts</span>
+            </div>
+            <div class="widget-stat-tile" onclick="switchTab('view-priorities')">
+              <span class="widget-stat-num" id="stat-priorities" style="color: var(--warning);">0</span>
+              <span class="widget-stat-label">Priorities</span>
+            </div>
+            <div class="widget-stat-tile" onclick="switchTab('view-todos')">
+              <span class="widget-stat-num" id="stat-tasks" style="color: var(--primary);">0</span>
+              <span class="widget-stat-label">Tasks</span>
+            </div>
+            <div class="widget-stat-tile" onclick="switchTab('view-time')">
+              <span class="widget-stat-num" id="stat-events" style="color: var(--accent);">0</span>
+              <span class="widget-stat-label">Events</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sticky Alerts Widget -->
+        <div class="widget-card widget-col-12" id="card-overview-alerts">
+          <div class="widget-header">
+            <div class="widget-title">
+              <span>🚨</span>
+              <span>Must Not Forget</span>
+            </div>
+            <span class="widget-action-link" onclick="switchTab('view-reminders')">Manage →</span>
           </div>
           <div class="widget-body" id="overview-alerts-list"></div>
         </div>
 
-        <div class="widget-card">
-          <div class="widget-head">
-            <span class="widget-title"><span style="color: var(--warning);">⭐</span> Priorities</span>
-            <span class="widget-action" onclick="switchTab('view-priorities')">Manage →</span>
+        <!-- Top Priorities Widget -->
+        <div class="widget-card widget-col-6">
+          <div class="widget-header">
+            <div class="widget-title">
+              <span>⭐</span>
+              <span>Key Priorities</span>
+            </div>
+            <span class="widget-action-link" onclick="switchTab('view-priorities')">Checklist →</span>
           </div>
           <div class="widget-body" id="overview-priorities-list"></div>
         </div>
 
-        <div class="widget-card widget-full">
-          <div class="widget-head">
-            <span class="widget-title"><span>🕒</span> Schedule & Meetings</span>
-            <span class="widget-action" onclick="switchTab('view-time')">Calendar →</span>
+        <!-- Today's Schedule Widget -->
+        <div class="widget-card widget-col-6">
+          <div class="widget-header">
+            <div class="widget-title">
+              <span>🕒</span>
+              <span>Schedule</span>
+            </div>
+            <span class="widget-action-link" onclick="switchTab('view-time')">Calendar →</span>
           </div>
           <div class="widget-body" id="overview-events-list"></div>
         </div>
 
-        <div class="widget-card widget-full">
-          <div class="widget-head">
-            <span class="widget-title"><span>📋</span> Tasks & Checklist</span>
-            <span class="widget-action" onclick="switchTab('view-todos')">All Tasks →</span>
+        <!-- Tasks Widget with Tag Filter -->
+        <div class="widget-card widget-col-12">
+          <div class="widget-header">
+            <div class="widget-title">
+              <span>📋</span>
+              <span>Tasks & Subtasks</span>
+            </div>
+            <span class="widget-action-link" onclick="switchTab('view-todos')">View All →</span>
           </div>
-          <div class="widget-body" id="overview-todos-list"></div>
+          <div class="widget-body">
+            <div class="tag-filter-bar" id="overview-tag-filters"></div>
+            <div id="overview-todos-list"></div>
+          </div>
         </div>
+
       </div>
     </section>
 
     <!-- 2. TO-DOS SECTION -->
     <section id="view-todos" class="section-view">
       <div class="card">
-        <div class="card-title">Add Daily To-Do</div>
+        <div class="card-title">
+          <span>Add Daily To-Do</span>
+          <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Carries over if incomplete</span>
+        </div>
+        
         <form id="todo-form">
-          <input type="text" id="todo-input" class="input-field" placeholder="What needs to be done?" required style="margin-bottom: 8px;">
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <input type="text" id="todo-input" class="input-field" placeholder="What needs to be done?" required style="margin-bottom: 10px;">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
             <div>
-              <label style="font-size: 11px; color: var(--text-muted);">Category</label>
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Category</label>
               <select id="todo-category">
                 <option value="work">💼 Work</option>
                 <option value="personal">🏠 Personal</option>
               </select>
             </div>
             <div>
-              <label style="font-size: 11px; color: var(--text-muted);">Initial Status</label>
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Initial Status</label>
               <select id="todo-type">
                 <option value="in_progress">🔄 In Progress</option>
                 <option value="urgent">🔥 Urgent</option>
@@ -734,65 +964,53 @@
             </div>
           </div>
 
-          <!-- Customizable Tags -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <!-- Repeating Task Rule Selection -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
             <div>
-              <label style="font-size: 11px; color: var(--text-muted);">Custom Tag (Optional)</label>
-              <input type="text" id="todo-custom-tag" class="input-field" placeholder="e.g. #deepwork, #meeting">
-            </div>
-            <div>
-              <label style="font-size: 11px; color: var(--text-muted);">Tag Color</label>
-              <select id="todo-tag-color">
-                <option value="blue">Blue</option>
-                <option value="purple">Purple</option>
-                <option value="green">Green</option>
-                <option value="amber">Amber</option>
-                <option value="red">Red</option>
-                <option value="pink">Pink</option>
-                <option value="cyan">Cyan</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Recurring Frequency -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-            <div>
-              <label style="font-size: 11px; color: var(--text-muted);">Repeat</label>
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Repeat Schedule</label>
               <select id="todo-repeat" onchange="toggleRepeatOptions()">
                 <option value="none">No Repeat</option>
-                <option value="daily">Daily</option>
-                <option value="weekly_days">Weekly (Specific Days)</option>
-                <option value="monthly">Monthly</option>
-                <option value="custom">Custom (Every X Days)</option>
+                <option value="daily">🔁 Daily</option>
+                <option value="weekly">🔁 Weekly</option>
+                <option value="monthly">🔁 Monthly</option>
+                <option value="custom">🔁 Custom (Every X Days)</option>
               </select>
             </div>
             <div id="custom-repeat-box" style="display: none;">
-              <label style="font-size: 11px; color: var(--text-muted);">Every X Days</label>
+              <label style="font-size: 11px; font-weight: 700; color: var(--text-muted);">Interval (Days)</label>
               <input type="number" id="todo-repeat-interval" class="input-field" min="2" max="365" value="3">
             </div>
           </div>
 
-          <!-- Specific Day(s) of Week Selector -->
-          <div id="weekdays-repeat-box" style="display: none; margin-bottom: 10px;">
-            <label style="font-size: 11px; color: var(--text-muted);">Repeat On Weekdays (Tap to select)</label>
-            <div class="weekday-selector">
-              <div class="weekday-btn" data-day="1" onclick="toggleWeekdaySelection(this)">Mon</div>
-              <div class="weekday-btn" data-day="2" onclick="toggleWeekdaySelection(this)">Tue</div>
-              <div class="weekday-btn" data-day="3" onclick="toggleWeekdaySelection(this)">Wed</div>
-              <div class="weekday-btn" data-day="4" onclick="toggleWeekdaySelection(this)">Thu</div>
-              <div class="weekday-btn" data-day="5" onclick="toggleWeekdaySelection(this)">Fri</div>
-              <div class="weekday-btn" data-day="6" onclick="toggleWeekdaySelection(this)">Sat</div>
-              <div class="weekday-btn" data-day="0" onclick="toggleWeekdaySelection(this)">Sun</div>
+          <!-- Custom Tags Input & Preset Selectors -->
+          <div style="margin-bottom: 12px;">
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">
+              Custom Tags (e.g. #deepwork, #client, #errand)
+            </label>
+            <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+              <input type="text" id="todo-tags-input" class="input-field" placeholder="Type tag & pick color...">
+              <select id="todo-tag-color" style="width: 100px;">
+                <option value="#2563eb">Blue</option>
+                <option value="#10b981">Green</option>
+                <option value="#8b5cf6">Purple</option>
+                <option value="#f59e0b">Amber</option>
+                <option value="#ef4444">Red</option>
+                <option value="#ec4899">Pink</option>
+                <option value="#06b6d4">Cyan</option>
+              </select>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="addPendingTag()">+ Tag</button>
             </div>
+            <div id="pending-tags-container" style="display: flex; gap: 6px; flex-wrap: wrap; min-height: 24px;"></div>
           </div>
 
-          <button type="submit" class="btn" style="width: 100%;">Add Task</button>
+          <button type="submit" class="btn" style="width: 100%;">Create Task</button>
         </form>
       </div>
 
-      <!-- Tag Filter Bar -->
-      <div id="task-filter-container" class="filter-tags-scroll"></div>
+      <!-- Tag Filter Toolbar -->
+      <div class="tag-filter-bar" id="tasks-tag-filters"></div>
 
+      <!-- Task items list -->
       <div id="todo-list"></div>
     </section>
 
@@ -800,7 +1018,7 @@
     <section id="view-priorities" class="section-view">
       <div class="card">
         <div class="card-title">Top Priority Checklist</div>
-        <form id="priority-form" style="display: flex; gap: 6px;">
+        <form id="priority-form" style="display: flex; gap: 8px;">
           <input type="text" id="priority-input" class="input-field" placeholder="Key priority for today..." required>
           <button type="submit" class="btn">Add</button>
         </form>
@@ -813,12 +1031,12 @@
       <div class="card">
         <div class="card-title">Schedule Timed Event</div>
         <form id="event-form">
-          <input type="text" id="event-title" class="input-field" placeholder="Meeting or event..." required style="margin-bottom: 8px;">
+          <input type="text" id="event-title" class="input-field" placeholder="Meeting or event title..." required style="margin-bottom: 8px;">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
             <input type="date" id="event-date" class="input-field" required>
             <input type="time" id="event-time" class="input-field" required>
           </div>
-          <button type="submit" class="btn" style="width: 100%;">Schedule</button>
+          <button type="submit" class="btn" style="width: 100%;">Schedule Event</button>
         </form>
       </div>
       <div id="event-list"></div>
@@ -827,9 +1045,9 @@
     <!-- 5. ALERTS & REMINDERS SECTION -->
     <section id="view-reminders" class="section-view">
       <div class="card">
-        <div class="card-title">Sticky Alerts (Don't Forget!)</div>
-        <form id="reminder-form" style="display: flex; gap: 6px;">
-          <input type="text" id="reminder-input" class="input-field" placeholder="Critical memo..." required>
+        <div class="card-title">Sticky Alerts (Never Forget)</div>
+        <form id="reminder-form" style="display: flex; gap: 8px;">
+          <input type="text" id="reminder-input" class="input-field" placeholder="Critical memo or deadline..." required>
           <button type="submit" class="btn btn-danger">Pin</button>
         </form>
       </div>
@@ -845,21 +1063,21 @@
       <div class="card" id="journal-work-card">
         <div class="card-title">
           <span>💼 Work Reflection</span>
-          <button class="btn btn-secondary btn-sm" onclick="insertTime('work')">+ Time</button>
+          <button class="btn btn-secondary btn-sm" onclick="insertTime('work')">+ Timestamp</button>
         </div>
-        <textarea id="journal-work-pad" rows="12" class="input-field" placeholder="Key wins, blockers, meetings, and work notes..."></textarea>
+        <textarea id="journal-work-pad" rows="12" class="input-field" placeholder="Key wins, blockers, meetings, and project updates..."></textarea>
       </div>
       <div class="card" id="journal-personal-card" style="display: none;">
         <div class="card-title">
           <span>🏠 Personal Journal</span>
-          <button class="btn btn-secondary btn-sm" onclick="insertTime('personal')">+ Time</button>
+          <button class="btn btn-secondary btn-sm" onclick="insertTime('personal')">+ Timestamp</button>
         </div>
-        <textarea id="journal-personal-pad" rows="12" class="input-field" placeholder="Thoughts, gratitude, habits, and reflections..."></textarea>
+        <textarea id="journal-personal-pad" rows="12" class="input-field" placeholder="Thoughts, gratitude, habits, health, and reflections..."></textarea>
       </div>
     </section>
   </main>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Navigation Bar -->
   <nav class="bottom-nav">
     <button class="nav-tab active" data-target="view-dashboard">
       <span>📊</span>
@@ -953,8 +1171,176 @@
     let currentDayData = loadDay(selectedDateString);
     let reminders = getDB("reminders", []);
     let recurringTemplates = getDB("recurring_templates", []);
+    let pendingTags = [];
+
+    function toggleRepeatOptions() {
+      const rep = document.getElementById("todo-repeat").value;
+      document.getElementById("custom-repeat-box").style.display = rep === "custom" ? "block" : "none";
+    }
+
+    function getPreviousDateString(dateStr) {
+      const [y, m, d] = dateStr.split("-").map(Number);
+      return formatLocalDate(new Date(y, m - 1, d - 1));
+    }
+
+    function daysDifference(date1Str, date2Str) {
+      const d1 = new Date(date1Str);
+      const d2 = new Date(date2Str);
+      const diffTime = d2.getTime() - d1.getTime();
+      return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    function isTaskDueOnDate(template, targetDateStr) {
+      if (targetDateStr < template.startDate) return false;
+      const diffDays = daysDifference(template.startDate, targetDateStr);
+      if (diffDays < 0) return false;
+
+      if (template.repeat === "daily") return true;
+      if (template.repeat === "weekly") return diffDays % 7 === 0;
+      if (template.repeat === "monthly") {
+        const start = new Date(template.startDate);
+        const target = new Date(targetDateStr);
+        return start.getDate() === target.getDate();
+      }
+      if (template.repeat === "custom") {
+        const interval = Number(template.interval) || 1;
+        return diffDays % interval === 0;
+      }
+      return false;
+    }
+
+    function processRolloverAndRecurring(dateStr) {
+      let modified = false;
+      if (!currentDayData.todos) currentDayData.todos = [];
+
+      // 1. CARRY OVER: Unfinished tasks from previous day
+      const prevDateStr = getPreviousDateString(dateStr);
+      const prevDay = loadDay(prevDateStr);
+      if (prevDay && prevDay.todos && prevDay.todos.length > 0) {
+        prevDay.todos.forEach(prevTask => {
+          if (!prevTask.completed) {
+            const alreadyCarried = currentDayData.todos.some(t => 
+              t.carriedFromId === prevTask.id || (t.title === prevTask.title && t.carriedOver)
+            );
+            if (!alreadyCarried) {
+              currentDayData.todos.push({
+                ...prevTask,
+                id: Date.now().toString() + "_" + Math.random().toString(36).substr(2, 4),
+                carriedFromId: prevTask.id,
+                carriedOver: true,
+                completed: false,
+                subtasks: (prevTask.subtasks || []).map(s => ({ ...s, completed: false }))
+              });
+              modified = true;
+            }
+          }
+        });
+      }
+
+      // 2. RECURRING: Generate tasks matching schedule
+      recurringTemplates.forEach(template => {
+        if (isTaskDueOnDate(template, dateStr)) {
+          const alreadyExists = currentDayData.todos.some(t => t.recurringTemplateId === template.id);
+          if (!alreadyExists) {
+            currentDayData.todos.push({
+              id: Date.now().toString() + "_" + Math.random().toString(36).substr(2, 4),
+              recurringTemplateId: template.id,
+              title: template.title,
+              category: template.category,
+              type: template.type,
+              tags: template.tags || [],
+              repeat: template.repeat,
+              interval: template.interval,
+              completed: false,
+              subtasks: []
+            });
+            modified = true;
+          }
+        }
+      });
+
+      if (modified) {
+        saveDay(dateStr, currentDayData);
+      }
+    }
+
+    function addPendingTag() {
+      const inp = document.getElementById("todo-tags-input");
+      const color = document.getElementById("todo-tag-color").value;
+      let text = inp.value.trim();
+      if (!text) return;
+      if (!text.startsWith("#")) text = "#" + text;
+
+      if (!pendingTags.some(t => t.text.toLowerCase() === text.toLowerCase())) {
+        pendingTags.push({ text, color });
+        renderPendingTags();
+      }
+      inp.value = "";
+    }
+
+    function removePendingTag(idx) {
+      pendingTags.splice(idx, 1);
+      renderPendingTags();
+    }
+
+    function renderPendingTags() {
+      const cont = document.getElementById("pending-tags-container");
+      cont.innerHTML = pendingTags.map((t, idx) => `
+        <span class="tag-chip" style="background: ${t.color}22; color: ${t.color}; border: 1px solid ${t.color}44;">
+          ${t.text}
+          <span onclick="removePendingTag(${idx})" style="margin-left: 3px; cursor: pointer; font-weight: 800;">×</span>
+        </span>
+      `).join('');
+    }
+
+    function renderTagFilterBar(containerId) {
+      const cont = document.getElementById(containerId);
+      if (!cont) return;
+
+      const tasks = currentDayData.todos || [];
+      const tagMap = new Map();
+      
+      tasks.forEach(t => {
+        (t.tags || []).forEach(tag => {
+          tagMap.set(tag.text, tag.color);
+        });
+      });
+
+      if (tagMap.size === 0) {
+        cont.style.display = "none";
+        return;
+      }
+      cont.style.display = "flex";
+
+      let html = `
+        <button class="tag-filter-pill ${selectedTagFilter === 'ALL' ? 'active' : ''}" onclick="setTagFilter('ALL')">
+          All Tags
+        </button>
+      `;
+
+      tagMap.forEach((color, text) => {
+        const isActive = selectedTagFilter === text;
+        html += `
+          <button class="tag-filter-pill ${isActive ? 'active' : ''}" 
+                  style="${isActive ? `background: ${color}; border-color: ${color}; color: #fff;` : `color: ${color}; border-color: ${color}55;`}" 
+                  onclick="setTagFilter('${text}')">
+            ${text}
+          </button>
+        `;
+      });
+
+      cont.innerHTML = html;
+    }
+
+    window.setTagFilter = (tag) => {
+      selectedTagFilter = tag;
+      renderTodos();
+      renderOverview();
+    };
 
     let unsubscribeSnapshot = null;
+    let currentUser = null;
+    const authBtn = document.getElementById("auth-btn");
 
     function listenToCloudData(dateStr) {
       if (unsubscribeSnapshot) unsubscribeSnapshot();
@@ -1005,139 +1391,13 @@
       }
     }
 
-    // --- RECURRING & ROLLOVER LOGIC ---
-    function toggleRepeatOptions() {
-      const rep = document.getElementById("todo-repeat").value;
-      document.getElementById("custom-repeat-box").style.display = rep === "custom" ? "block" : "none";
-      document.getElementById("weekdays-repeat-box").style.display = rep === "weekly_days" ? "block" : "none";
-    }
-
-    function toggleWeekdaySelection(el) {
-      el.classList.toggle("selected");
-    }
-
-    function getSelectedWeekdays() {
-      const selected = [];
-      document.querySelectorAll(".weekday-btn.selected").forEach(btn => {
-        selected.push(parseInt(btn.getAttribute("data-day"), 10));
-      });
-      return selected;
-    }
-
-    function resetWeekdaySelection() {
-      document.querySelectorAll(".weekday-btn").forEach(btn => btn.classList.remove("selected"));
-    }
-
-    function getDayNameShort(num) {
-      return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][num];
-    }
-
-    function getPreviousDateString(dateStr) {
-      const [y, m, d] = dateStr.split("-").map(Number);
-      return formatLocalDate(new Date(y, m - 1, d - 1));
-    }
-
-    function daysDifference(date1Str, date2Str) {
-      const d1 = new Date(date1Str);
-      const d2 = new Date(date2Str);
-      const diffTime = d2.getTime() - d1.getTime();
-      return Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    }
-
-    function isTaskDueOnDate(template, targetDateStr) {
-      if (targetDateStr < template.startDate) return false;
-      const [y, m, d] = targetDateStr.split("-").map(Number);
-      const targetDate = new Date(y, m - 1, d);
-      const diffDays = daysDifference(template.startDate, targetDateStr);
-      if (diffDays < 0) return false;
-
-      if (template.repeat === "daily") return true;
-
-      // Handle custom multi-day of week selection
-      if (template.repeat === "weekly_days") {
-        const targetDay = targetDate.getDay(); // 0: Sun, 1: Mon, ..., 6: Sat
-        return Array.isArray(template.weekdays) && template.weekdays.includes(targetDay);
-      }
-
-      if (template.repeat === "monthly") {
-        const [sy, sm, sd] = template.startDate.split("-").map(Number);
-        return sd === d;
-      }
-      if (template.repeat === "custom") {
-        const interval = Number(template.interval) || 1;
-        return diffDays % interval === 0;
-      }
-      return false;
-    }
-
-    function processRolloverAndRecurring(dateStr) {
-      let modified = false;
-      if (!currentDayData.todos) currentDayData.todos = [];
-
-      // 1. CARRY OVER: Unfinished tasks from previous day
-      const prevDateStr = getPreviousDateString(dateStr);
-      const prevDay = loadDay(prevDateStr);
-      if (prevDay && prevDay.todos && prevDay.todos.length > 0) {
-        prevDay.todos.forEach(prevTask => {
-          if (!prevTask.completed) {
-            const alreadyCarried = currentDayData.todos.some(t =>
-              t.carriedFromId === prevTask.id || (t.title === prevTask.title && t.carriedOver)
-            );
-            if (!alreadyCarried) {
-              currentDayData.todos.push({
-                ...prevTask,
-                id: Date.now().toString() + "_" + Math.random().toString(36).substr(2, 4),
-                carriedFromId: prevTask.id,
-                carriedOver: true,
-                completed: false,
-                subtasks: (prevTask.subtasks || []).map(s => ({ ...s, completed: false }))
-              });
-              modified = true;
-            }
-          }
-        });
-      }
-
-      // 2. RECURRING: Generate tasks matching schedule
-      recurringTemplates.forEach(template => {
-        if (isTaskDueOnDate(template, dateStr)) {
-          const alreadyExists = currentDayData.todos.some(t => t.recurringTemplateId === template.id);
-          if (!alreadyExists) {
-            currentDayData.todos.push({
-              id: Date.now().toString() + "_" + Math.random().toString(36).substr(2, 4),
-              recurringTemplateId: template.id,
-              title: template.title,
-              category: template.category,
-              type: template.type,
-              repeat: template.repeat,
-              weekdays: template.weekdays || [],
-              interval: template.interval,
-              tag: template.tag || "",
-              tagColor: template.tagColor || "blue",
-              completed: false,
-              subtasks: []
-            });
-            modified = true;
-          }
-        }
-      });
-
-      if (modified) {
-        saveDay(dateStr, currentDayData);
-      }
-    }
-
-    // --- AUTHENTICATION ---
-    let currentUser = null;
-    const authBtn = document.getElementById("auth-btn");
-
     authBtn.addEventListener("click", () => {
       if (currentUser) {
         auth.signOut();
       } else {
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider).catch(err => {
-          alert("Sign in failed: " + err.message);
+          showToast("Sign in failed");
         });
       }
     });
@@ -1150,7 +1410,7 @@
         listenToCloudData(selectedDateString);
       } else {
         authBtn.textContent = "Sign In";
-        showToast("Offline / Local mode");
+        showToast("Local mode");
         currentDayData = loadDay(selectedDateString);
         processRolloverAndRecurring(selectedDateString);
         renderAll();
@@ -1169,7 +1429,7 @@
       if (!t) return;
       t.textContent = txt;
       t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 1500);
+      setTimeout(() => t.classList.remove("show"), 1800);
     }
 
     function switchTab(targetId) {
@@ -1186,99 +1446,108 @@
       tab.addEventListener("click", () => switchTab(tab.getAttribute("data-target")));
     });
 
-    // --- RENDERING ---
     function renderOverview() {
       const allTodos = currentDayData.todos || [];
       const pendingTodos = allTodos.filter(t => !t.completed);
-      const completedTodos = allTodos.filter(t => t.completed);
+      const doneTodos = allTodos.filter(t => t.completed);
+      const totalTasks = allTodos.length;
+      const progressPercent = totalTasks > 0 ? Math.round((doneTodos.length / totalTasks) * 100) : 0;
+      const pendingPriorities = (currentDayData.priorities || []).filter(p => !p.completed);
 
-      const allPriorities = currentDayData.priorities || [];
-      const pendingPriorities = allPriorities.filter(p => !p.completed);
-
-      const totalTracked = allTodos.length + allPriorities.length;
-      const totalCompleted = completedTodos.length + (allPriorities.length - pendingPriorities.length);
-      const percentage = totalTracked === 0 ? 0 : Math.round((totalCompleted / totalTracked) * 100);
-
-      document.getElementById("progress-percent").textContent = `${percentage}% Done`;
-      document.getElementById("progress-fill").style.width = `${percentage}%`;
-
+      // Hero metrics
       document.getElementById("stat-alerts").textContent = reminders.length;
       document.getElementById("stat-priorities").textContent = pendingPriorities.length;
       document.getElementById("stat-tasks").textContent = pendingTodos.length;
       document.getElementById("stat-events").textContent = (currentDayData.events || []).length;
+      document.getElementById("completion-progress-badge").textContent = `${progressPercent}% Completed`;
 
-      // Alerts Widget
+      // Date subtitle formatted
+      const dObj = new Date(selectedDateString + "T00:00:00");
+      const dateOptions = { weekday: 'long', month: 'short', day: 'numeric' };
+      document.getElementById("widget-date-subtitle").textContent = dObj.toLocaleDateString(undefined, dateOptions);
+
+      // 1. Alerts Widget Body
       const alertsEl = document.getElementById("overview-alerts-list");
       if (reminders.length === 0) {
-        alertsEl.innerHTML = `<div class="widget-empty">No critical alerts.</div>`;
+        alertsEl.innerHTML = `<div class="widget-empty">No critical alerts pinned.</div>`;
       } else {
         alertsEl.innerHTML = reminders.map((r, i) => `
-          <div class="widget-item">
-            <span style="font-size: 14px;">⚠️</span>
-            <span style="flex: 1; font-weight: 600; font-size: 12px;">${r.text}</span>
-            <button class="btn btn-secondary btn-sm" onclick="deleteReminder(${i})">✓</button>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border);">
+            <span style="font-size: 15px;">⚠️</span>
+            <span style="flex: 1; font-weight: 700; font-size: 13px;">${r.text}</span>
+            <button class="btn btn-secondary btn-sm" onclick="deleteReminder(${i})">Done</button>
           </div>
         `).join('');
       }
 
-      // Priorities Widget
+      // 2. Priorities Widget Body
       const prioEl = document.getElementById("overview-priorities-list");
-      if (allPriorities.length === 0) {
-        prioEl.innerHTML = `<div class="widget-empty">No priorities set.</div>`;
+      if ((currentDayData.priorities || []).length === 0) {
+        prioEl.innerHTML = `<div class="widget-empty">No priorities set for today.</div>`;
       } else {
-        prioEl.innerHTML = allPriorities.map((p, i) => `
-          <div class="widget-item">
-            <input type="checkbox" ${p.completed ? 'checked' : ''} onchange="togglePriority(${i})" style="width: 15px; height: 15px; accent-color: var(--primary);">
-            <span style="flex: 1; ${p.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 500; font-size: 12px;'}">${p.text}</span>
-            ${p.starred ? '<span style="color: #f59e0b; font-size: 11px;">★</span>' : ''}
+        prioEl.innerHTML = currentDayData.priorities.map((p, i) => `
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border);">
+            <input type="checkbox" ${p.completed ? 'checked' : ''} onchange="togglePriority(${i})" style="width: 17px; height: 17px; accent-color: var(--primary);">
+            <span style="flex: 1; ${p.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 600;'} font-size: 13.5px;">${p.text}</span>
+            ${p.starred ? '<span style="color: #f59e0b;">★</span>' : ''}
           </div>
         `).join('');
       }
 
-      // Events Widget
+      // 3. Events Widget Body
       const eventsEl = document.getElementById("overview-events-list");
       if ((currentDayData.events || []).length === 0) {
-        eventsEl.innerHTML = `<div class="widget-empty">No scheduled events for this date.</div>`;
+        eventsEl.innerHTML = `<div class="widget-empty">No events scheduled.</div>`;
       } else {
         eventsEl.innerHTML = currentDayData.events.map((e) => `
-          <div class="widget-item">
-            <span style="font-size: 13px;">🕒</span>
-            <span style="font-weight: 700; font-size: 12px; color: var(--primary); min-width: 48px;">${e.time}</span>
-            <span style="flex: 1; font-weight: 500; font-size: 12px;">${e.title}</span>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border);">
+            <span style="font-size: 13px; font-weight: 700; color: var(--primary); font-family: var(--font-mono); min-width: 48px;">${e.time}</span>
+            <span style="flex: 1; font-weight: 600; font-size: 13.5px;">${e.title}</span>
           </div>
         `).join('');
       }
 
-      // Tasks Widget
+      // 4. Tasks Widget with filter
+      renderTagFilterBar("overview-tag-filters");
       const tasksEl = document.getElementById("overview-todos-list");
-      if (allTodos.length === 0) {
-        tasksEl.innerHTML = `<div class="widget-empty">No to-do items created.</div>`;
+      
+      let filteredTodos = allTodos;
+      if (selectedTagFilter !== "ALL") {
+        filteredTodos = allTodos.filter(t => (t.tags || []).some(tg => tg.text === selectedTagFilter));
+      }
+
+      if (filteredTodos.length === 0) {
+        tasksEl.innerHTML = `<div class="widget-empty">No tasks found.</div>`;
       } else {
-        tasksEl.innerHTML = allTodos.slice(0, 6).map(t => {
-          let recurringLabel = "";
-          if (t.repeat && t.repeat !== "none") {
-            if (t.repeat === "weekly_days" && Array.isArray(t.weekdays)) {
-              recurringLabel = t.weekdays.map(getDayNameShort).join(', ');
-            } else if (t.repeat === "custom") {
-              recurringLabel = `every ${t.interval}d`;
-            } else {
-              recurringLabel = t.repeat;
-            }
+        tasksEl.innerHTML = filteredTodos.map(t => {
+          const subs = t.subtasks || [];
+          const doneSubs = subs.filter(s => s.completed).length;
+          let subsSummary = "";
+          if (subs.length > 0) {
+            subsSummary = `<div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">Subtasks: ${doneSubs}/${subs.length} done</div>`;
           }
 
+          const tagsHtml = (t.tags || []).map(tg => `
+            <span class="tag-chip" style="background: ${tg.color}20; color: ${tg.color}; border: 1px solid ${tg.color}40;">
+              ${tg.text}
+            </span>
+          `).join('');
+
           return `
-            <div class="widget-item" style="align-items: flex-start;">
-              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 2px; width: 15px; height: 15px; accent-color: var(--primary);">
+            <div style="display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 3px; width: 17px; height: 17px; accent-color: var(--primary);">
               <div style="flex: 1;">
-                <div style="${t.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 600; font-size: 13px;'}">
+                <div style="${t.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 700;'} font-size: 13.5px;">
                   ${t.title}
                 </div>
-                <div style="display: flex; gap: 4px; margin-top: 3px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; align-items: center;">
                   <span class="badge badge-${t.category}">${t.category}</span>
-                  ${t.tag ? `<span class="tag-chip tag-${t.tagColor \vert{}\vert{} 'blue'}">${t.tag}</span>` : ''}
+                  <span class="status-pill status-${t.type}">${t.type === 'urgent' ? '🔥 Urgent' : (t.type === 'dependent' ? '⏳ Dependent' : '🔄 In Progress')}</span>
                   ${t.carriedOver ? '<span class="badge badge-carried">Rolled Over</span>' : ''}
-                  ${recurringLabel ? `<span class="badge badge-recurring">🔁 ${recurringLabel}</span>` : ''}
+                  ${t.repeat && t.repeat !== 'none' ? `<span class="badge badge-recurring">🔁 ${t.repeat === 'custom' ? 'every ' + t.interval + 'd' : t.repeat}</span>` : ''}
+                  ${tagsHtml}
                 </div>
+                ${subsSummary}
               </div>
             </div>
           `;
@@ -1286,52 +1555,23 @@
       }
     }
 
-    function renderTagFilters() {
-      const container = document.getElementById("task-filter-container");
-      if (!container) return;
-
-      const tags = new Set();
-      (currentDayData.todos || []).forEach(t => {
-        if (t.tag) tags.add(t.tag);
-      });
-
-      if (tags.size === 0) {
-        container.innerHTML = "";
-        return;
-      }
-
-      let html = `<div class="filter-pill ${selectedTagFilter === 'ALL' ? 'active' : ''}" onclick="setTagFilter('ALL')">All (${(currentDayData.todos || []).length})</div>`;
-      tags.forEach(tag => {
-        const count = (currentDayData.todos || []).filter(t => t.tag === tag).length;
-        html += `<div class="filter-pill ${selectedTagFilter === tag ? 'active' : ''}" onclick="setTagFilter('${tag}')">${tag} (${count})</div>`;
-      });
-
-      container.innerHTML = html;
-    }
-
-    window.setTagFilter = (tag) => {
-      selectedTagFilter = tag;
-      renderTodos();
-      renderTagFilters();
-    };
-
     function renderTodos() {
+      renderTagFilterBar("tasks-tag-filters");
       const list = document.getElementById("todo-list");
       if (!list) return;
 
-      renderTagFilters();
-
       const allTodos = currentDayData.todos || [];
-      const displayedTodos = selectedTagFilter === "ALL" 
-        ? allTodos 
-        : allTodos.filter(t => t.tag === selectedTagFilter);
+      let filteredTodos = allTodos;
+      if (selectedTagFilter !== "ALL") {
+        filteredTodos = allTodos.filter(t => (t.tags || []).some(tg => tg.text === selectedTagFilter));
+      }
 
-      if (displayedTodos.length === 0) {
-        list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px 0;">No tasks found for this view.</div>`;
+      if (filteredTodos.length === 0) {
+        list.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 24px 0;">No tasks found.</div>`;
         return;
       }
 
-      list.innerHTML = displayedTodos.map(t => {
+      list.innerHTML = filteredTodos.map(t => {
         const subsHtml = (t.subtasks || []).map((st, sIdx) => `
           <div class="subtask-item ${st.completed ? 'subtask-completed' : ''}">
             <input type="checkbox" ${st.completed ? 'checked' : ''} onchange="toggleSubtask('${t.id}', ${sIdx})" style="accent-color: var(--primary);">
@@ -1342,41 +1582,37 @@
           </div>
         `).join('');
 
-        let recurringLabel = "";
-        if (t.repeat && t.repeat !== "none") {
-          if (t.repeat === "weekly_days" && Array.isArray(t.weekdays)) {
-            recurringLabel = t.weekdays.map(getDayNameShort).join(', ');
-          } else if (t.repeat === "custom") {
-            recurringLabel = `every ${t.interval}d`;
-          } else {
-            recurringLabel = t.repeat;
-          }
-        }
+        const tagsHtml = (t.tags || []).map((tg, tgIdx) => `
+          <span class="tag-chip" style="background: ${tg.color}20; color: ${tg.color}; border: 1px solid ${tg.color}40;">
+            ${tg.text}
+            <span onclick="removeTaskTag('${t.id}', ${tgIdx})" style="margin-left: 2px; cursor: pointer;">×</span>
+          </span>
+        `).join('');
 
         return `
           <div class="todo-item ${t.completed ? 'todo-completed' : ''}">
             <div class="todo-header">
-              <input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')" style="margin-top: 3px; width: 17px; height: 17px; accent-color: var(--primary);">
+              <input type="checkbox" class="todo-checkbox" ${t.completed ? 'checked' : ''} onchange="toggleTodo('${t.id}')">
               <div style="flex: 1;">
                 <div class="todo-title">${t.title}</div>
-                <div style="display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; align-items: center;">
                   <span class="badge badge-${t.category}">${t.category}</span>
                   <span class="status-pill status-${t.type}">${t.type === 'urgent' ? '🔥 Urgent' : (t.type === 'dependent' ? '⏳ Dependent' : '🔄 In Progress')}</span>
-                  ${t.tag ? `<span class="tag-chip tag-${t.tagColor \vert{}\vert{} 'blue'}">${t.tag}</span>` : ''}
                   ${t.carriedOver ? '<span class="badge badge-carried">Rolled Over</span>' : ''}
-                  ${recurringLabel ? `<span class="badge badge-recurring">🔁 ${recurringLabel}</span>` : ''}
+                  ${t.repeat && t.repeat !== 'none' ? `<span class="badge badge-recurring">🔁 ${t.repeat === 'custom' ? 'every ' + t.interval + 'd' : t.repeat}</span>` : ''}
+                  ${tagsHtml}
+                  <button class="btn btn-secondary btn-sm" onclick="promptAddTag('${t.id}')" style="padding: 1px 5px; font-size: 10px;">+Tag</button>
                 </div>
               </div>
               <div style="display: flex; gap: 4px;">
-                <button class="btn btn-secondary btn-sm" onclick="promptAddTag('${t.id}')" title="Set Tag">+Tag</button>
-                <button class="btn btn-secondary btn-sm" onclick="renameTodo('${t.id}')" title="Rename Task">✏️️</button>
+                <button class="btn btn-secondary btn-sm" onclick="renameTodo('${t.id}')" title="Rename Task">✏️</button>
                 <button class="btn btn-secondary btn-sm" onclick="toggleSubInput('${t.id}')">+Sub</button>
                 <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deleteTodo('${t.id}')">✕</button>
               </div>
             </div>
-            <div style="margin-top: 6px; padding-left: 24px;">
+            <div style="margin-top: 6px; padding-left: 28px;">
               ${subsHtml}
-              <div id="sub-row-${t.id}" style="display: none; gap: 4px; margin-top: 6px;">
+              <div id="sub-row-${t.id}" style="display: none; gap: 4px; margin-top: 8px;">
                 <input type="text" id="sub-input-${t.id}" class="input-field" placeholder="Subtask name..." style="padding: 4px 8px; font-size: 12px;">
                 <select id="sub-type-${t.id}" style="width: auto; padding: 4px; font-size: 12px;">
                   <option value="in_progress">🔄</option>
@@ -1401,8 +1637,8 @@
       list.innerHTML = currentDayData.priorities.map((p, i) => `
         <div class="priority-item">
           <button class="star-btn ${p.starred ? 'starred' : ''}" onclick="togglePriorityStar(${i})">★</button>
-          <input type="checkbox" ${p.completed ? 'checked' : ''} onchange="togglePriority(${i})" style="accent-color: var(--primary);">
-          <span style="flex: 1; ${p.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 500;'}">${p.text}</span>
+          <input type="checkbox" ${p.completed ? 'checked' : ''} onchange="togglePriority(${i})" style="accent-color: var(--primary); width: 17px; height: 17px;">
+          <span style="flex: 1; ${p.completed ? 'text-decoration: line-through; color: var(--text-muted);' : 'font-weight: 600;'} font-size: 14px;">${p.text}</span>
           <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deletePriority(${i})">✕</button>
         </div>
       `).join('');
@@ -1416,10 +1652,10 @@
         return;
       }
       list.innerHTML = currentDayData.events.map((e, i) => `
-        <div class="card" style="margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="card" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; padding: 12px 14px;">
           <div>
-            <div style="font-weight: 600; font-size: 14px;">${e.title}</div>
-            <div style="font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 2px;">🕒 ${e.time}</div>
+            <div style="font-weight: 700; font-size: 14px;">${e.title}</div>
+            <div style="font-size: 12px; color: var(--primary); font-weight: 700; font-family: var(--font-mono); margin-top: 3px;">🕒 ${e.time}</div>
           </div>
           <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deleteEvent(${i})">✕</button>
         </div>
@@ -1435,7 +1671,7 @@
       }
       list.innerHTML = reminders.map((r, i) => `
         <div class="reminder-card">
-          <span style="font-weight: 600; font-size: 13px;">⚠️ ${r.text}</span>
+          <span style="font-weight: 700; font-size: 13.5px;">⚠️ ${r.text}</span>
           <button class="btn btn-secondary btn-sm" onclick="deleteReminder(${i})">Done</button>
         </div>
       `).join('');
@@ -1449,7 +1685,6 @@
       renderReminders();
     }
 
-    // --- FORM ACTIONS ---
     document.getElementById("todo-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const inp = document.getElementById("todo-input");
@@ -1458,32 +1693,20 @@
       const type = document.getElementById("todo-type").value;
       const repeat = document.getElementById("todo-repeat").value;
       const interval = repeat === "custom" ? document.getElementById("todo-repeat-interval").value : null;
-      const selectedWeekdays = repeat === "weekly_days" ? getSelectedWeekdays() : [];
-
-      if (repeat === "weekly_days" && selectedWeekdays.length === 0) {
-        alert("Please select at least one weekday for weekly recurrence.");
-        return;
-      }
-
-      let tag = document.getElementById("todo-custom-tag").value.trim();
-      if (tag && !tag.startsWith("#")) tag = "#" + tag;
-      const tagColor = document.getElementById("todo-tag-color").value;
 
       if (!currentDayData.todos) currentDayData.todos = [];
-
       const newTaskId = Date.now().toString();
 
+      // Recurring registration
       if (repeat !== "none") {
         recurringTemplates.push({
           id: "rep_" + newTaskId,
           title,
           category,
           type,
+          tags: [...pendingTags],
           repeat,
-          weekdays: selectedWeekdays,
           interval,
-          tag,
-          tagColor,
           startDate: selectedDateString
         });
         setDB("recurring_templates", recurringTemplates);
@@ -1495,19 +1718,17 @@
         title,
         category,
         type,
+        tags: [...pendingTags],
         repeat,
-        weekdays: selectedWeekdays,
         interval,
-        tag,
-        tagColor,
         completed: false,
         subtasks: []
       });
 
       inp.value = "";
-      document.getElementById("todo-custom-tag").value = "";
+      pendingTags = [];
+      renderPendingTags();
       document.getElementById("todo-repeat").value = "none";
-      resetWeekdaySelection();
       toggleRepeatOptions();
       syncAll();
       showToast("Task added");
@@ -1516,14 +1737,24 @@
     window.promptAddTag = (id) => {
       const task = currentDayData.todos.find(t => t.id === id);
       if (!task) return;
-      let val = prompt("Enter tag name (e.g. #focus, #work):", task.tag || "");
-      if (val !== null) {
-        val = val.trim();
-        if (val && !val.startsWith("#")) val = "#" + val;
-        task.tag = val;
-        syncAll();
-        showToast("Tag updated");
-      }
+      let text = prompt("Enter tag name (e.g. #deepwork or #meeting):");
+      if (!text || !text.trim()) return;
+      text = text.trim();
+      if (!text.startsWith("#")) text = "#" + text;
+
+      const palette = ["#2563eb", "#10b981", "#8b5cf6", "#f59e0b", "#ef4444", "#ec4899", "#06b6d4"];
+      const randomColor = palette[Math.floor(Math.random() * palette.length)];
+
+      if (!task.tags) task.tags = [];
+      task.tags.push({ text, color: randomColor });
+      syncAll();
+    };
+
+    window.removeTaskTag = (todoId, tagIdx) => {
+      const task = currentDayData.todos.find(t => t.id === todoId);
+      if (!task || !task.tags) return;
+      task.tags.splice(tagIdx, 1);
+      syncAll();
     };
 
     window.renameTodo = (id) => {
@@ -1692,7 +1923,6 @@
       syncAll();
     };
 
-    // --- JOURNAL ---
     window.setJournalSegment = (type) => {
       document.getElementById("seg-btn-work").classList.toggle("active", type === 'work');
       document.getElementById("seg-btn-personal").classList.toggle("active", type === 'personal');
@@ -1717,7 +1947,6 @@
       saveDay(selectedDateString, currentDayData);
     });
 
-    // --- THEME & BACKUP ---
     document.getElementById("theme-btn").addEventListener("click", () => {
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
       document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark");
@@ -1731,7 +1960,6 @@
       a.click();
     });
 
-    // --- DATE NAVIGATION & CALENDAR ---
     function switchDate(newDate) {
       selectedDateString = newDate;
 
@@ -1767,9 +1995,9 @@
     document.getElementById("history-modal-btn").addEventListener("click", () => {
       const list = document.getElementById("history-modal-list");
       list.innerHTML = allSavedDates.map(d => `
-        <div style="padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; display: flex; justify-content: space-between;" onclick="switchDate('${d}'); historyModal.classList.remove('open');">
-          <b>${d === todayDateString ? 'Today (' + d + ')' : d}</b>
-          <span style="color: var(--primary);">Open</span>
+        <div style="padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="switchDate('${d}'); historyModal.classList.remove('open');">
+          <span style="font-weight: 700; font-size: 13.5px;">${d === todayDateString ? 'Today (' + d + ')' : d}</span>
+          <span style="color: var(--primary); font-weight: 700; font-size: 13px;">Open →</span>
         </div>
       `).join('');
       historyModal.classList.add("open");
@@ -1777,7 +2005,7 @@
 
     document.getElementById("close-history-btn").addEventListener("click", () => historyModal.classList.remove("open"));
 
-    // Launch initial state
+    // Launch initial application state
     switchDate(todayDateString);
   </script>
 </body>
